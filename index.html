@@ -606,7 +606,81 @@ const intautorStatus={
   'no-match-in-sample':'Sin coincidencia en la muestra consultada de IntAutor',
   unavailable:'El verificador de IntAutor no respondió'
 };
-function evidenceCard(snapshot) {
+function normalizeCitation(value) {
+  return String(value).normalize('NFC').replace(/\s+/gu,' ').trim();
+}
+async function inspectArchivedQuote(snapshot,quote) {
+  const bytes=Uint8Array.from(atob(snapshot.html),character=>character.charCodeAt(0));
+  const hash=await crypto.subtle.digest('SHA-256',bytes);
+  const observed=Array.from(new Uint8Array(hash),part=>part.toString(16).padStart(2,'0')).join('');
+  if(observed!==snapshot.sha256) throw new Error('La huella del HTML no coincide. Vuelve a capturar la fuente.');
+  const charset=snapshot.type?.match(/charset\s*=\s*["']?([\w-]+)/i)?.[1]||'utf-8';
+  let decoder;
+  try{decoder=new TextDecoder(charset);}catch{decoder=new TextDecoder();}
+  const documentCopy=document.createElement('template');
+  documentCopy.innerHTML=decoder.decode(bytes);
+  documentCopy.content.querySelectorAll('script,style,noscript,template,head,svg,iframe,[hidden],[aria-hidden="true"]').forEach(element=>element.remove());
+  const blocks=new Set(['P','DIV','H1','H2','H3','H4','H5','H6','LI','TD','TH','TR','SECTION','ARTICLE','MAIN','BR','HEADER','FOOTER','NAV','BLOCKQUOTE','PRE']);
+  const parts=[];
+  const walker=document.createTreeWalker(documentCopy.content,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);
+  for(let current=walker.nextNode();current;current=walker.nextNode()){
+    if(current.nodeType===Node.TEXT_NODE) parts.push(current.data);
+    else if(blocks.has(current.tagName)) parts.push(' ');
+  }
+  const text=normalizeCitation(parts.join('')), exact=normalizeCitation(quote);
+  let cursor=0, count=0, index;
+  const passages=[];
+  while((index=text.indexOf(exact,cursor))!==-1){
+    count++;
+    if(passages.length<3) passages.push({
+      before:text.slice(Math.max(0,index-90),index),
+      quote:text.slice(index,index+exact.length),
+      after:text.slice(index+exact.length,index+exact.length+90)
+    });
+    cursor=index+exact.length;
+  }
+  return {count,passages};
+}
+function citationPanel(snapshot,versions) {
+  const section=node('details','','evidence-backup');
+  section.append(node('summary','CognitIA · Comprobar una cita en este documento'));
+  section.append(node('p','Compara el texto con el HTML guardado después de verificar su huella. Se normalizan espacios y saltos de línea. El resultado acredita presencia textual y conserva su contexto.','hint'));
+  const digests=new Set(versions.map(version=>version.sha256));
+  if(digests.size>1){
+    section.append(node('p','Esta URL tiene '+digests.size+' versiones distintas. Una huella diferente indica un cambio de bytes en el HTML.','hint'));
+    const history=node('ul');
+    for(const version of versions.slice(0,8)) history.append(node('li',version.capturedAt+' · '+version.sha256));
+    section.append(history);
+  }
+  const form=node('form'), label=node('label','Cita exacta de la fuente'), field=node('textarea');
+  field.required=true;field.minLength=12;field.maxLength=800;field.rows=2;
+  label.append(field);
+  const button=node('button','Comprobar cita','secondary'), status=node('p'), results=node('div');
+  status.setAttribute('role','status');
+  form.append(label,button,status,results);
+  section.append(form);
+  form.addEventListener('submit',async event=>{
+    event.preventDefault();
+    results.replaceChildren();
+    const quote=normalizeCitation(field.value);
+    if(quote.length<12){status.textContent='Escribe al menos 12 caracteres de la cita.';return;}
+    button.disabled=true;
+    try{
+      const match=await inspectArchivedQuote(snapshot,quote);
+      status.textContent=match.count?'Cita localizada · '+match.count+' coincidencias en el HTML de esta captura.':'Sin coincidencias exactas en el HTML de esta captura.';
+      for(const {before,quote:exact,after} of match.passages){
+        const excerpt=node('blockquote');
+        excerpt.append(document.createTextNode(before),node('mark',exact),document.createTextNode(after));
+        results.append(excerpt);
+      }
+      if(match.count) results.append(node('p','Fuente: '+snapshot.url+' · Capturada '+snapshot.capturedAt+' · SHA-256 '+snapshot.sha256,'hint'));
+    }catch(error){status.textContent=error.message;}
+    finally{button.disabled=false;}
+  });
+  return section;
+}
+
+function evidenceCard(snapshot,versions) {
   const item=node('article','','evidence-card');
   const title=node('h3','Expediente de evidencia');
   const sourceLink=node('a','Abrir fuente original');
@@ -683,14 +757,20 @@ function evidenceCard(snapshot) {
     image.src='data:'+snapshot.attachment.type+';base64,'+snapshot.attachment.data;
     image.alt='Captura de pantalla aportada manualmente';image.loading='lazy';
     view.append(image,node('figcaption','Captura aportada manualmente · '+snapshot.attachment.attachedAt+' · SHA-256 '+snapshot.attachment.sha256));
-    item.append(title,sourceLink,visual,view,facts,backup,attach,attachmentStatus,exportButton);
-  } else item.append(title,sourceLink,visual,facts,backup,attach,attachmentStatus,exportButton);
+    item.append(title,sourceLink,visual,view,facts,backup,attach,attachmentStatus,citationPanel(snapshot,versions),exportButton);
+  } else item.append(title,sourceLink,visual,facts,backup,attach,attachmentStatus,citationPanel(snapshot,versions),exportButton);
   return item;
 }
 async function showArchive(){
   const captures=await archiveAction('readonly',store=>store.getAll());
   const region=el('archive-list');
-  region.replaceChildren(...captures.sort((a,b)=>b.capturedAt.localeCompare(a.capturedAt)).map(evidenceCard));
+  const ordered=captures.sort((a,b)=>b.capturedAt.localeCompare(a.capturedAt));
+  const byUrl=new Map();
+  for(const snapshot of ordered){
+    if(!byUrl.has(snapshot.url)) byUrl.set(snapshot.url,[]);
+    byUrl.get(snapshot.url).push(snapshot);
+  }
+  region.replaceChildren(...ordered.map(snapshot=>evidenceCard(snapshot,byUrl.get(snapshot.url))));
   if(!captures.length) region.append(node('p','Todavía no hay capturas locales.','hint'));
 }
 el('evidence-panel').addEventListener('toggle',()=>{
