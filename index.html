@@ -8,26 +8,28 @@
 <style>
 :root{color-scheme:light;--paper:#f5f2e9;--ink:#142c29;--muted:#4f625b;--rule:#cdd2c7;--green:#123c34;--mint:#dce9cd;--gold:#f0dc9c;--white:#fffcf5}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.5 system-ui,sans-serif}button,input,select,textarea{font:inherit}button,select{cursor:pointer}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #b35a16;outline-offset:3px}h1,h2,h3,p{margin:0}h1,h2,h3{line-height:1.08}h1,h2{font-family:Georgia,serif;font-weight:normal}
-.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.top{background:var(--green);color:var(--white)}nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid #729087}.brand{font-weight:750;display:flex;align-items:center;gap:10px}.brand span{border:1px solid #a2b5a7;padding:2px 7px;font-size:.8rem}.hero{padding:58px 0 65px;display:grid;grid-template-columns:2fr 1fr;align-items:end;gap:28px}.hero h1{font-size:clamp(2.7rem,7.6vw,6rem);letter-spacing:-.065em}.hero h1 span{display:block;color:#d3e7b1}.tagline{font-size:clamp(1.06rem,2vw,1.35rem);margin:20px 0 9px}.author{color:#d3e7b1;font-size:.9rem}.hero aside{border-left:2px solid #a3bc86;padding:0 0 4px 18px;color:#edf3e7;max-width:350px}main{padding:38px 0 62px}.section-head{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}.section-head h2{font-size:clamp(2rem,4vw,3.15rem);letter-spacing:-.05em}.primary{background:var(--green);color:var(--white);border:1px solid var(--green);padding:9px 15px;border-radius:5px;text-decoration:none;font-weight:650}.secondary{background:transparent;color:var(--green);border:1px solid var(--rule);padding:8px 12px;border-radius:5px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:22px 0;border:1px solid var(--rule);border-radius:6px;background:var(--white)}.metric{padding:15px 18px}.metric+.metric{border-left:1px solid var(--rule)}.metric strong{display:block;font:2rem/1.1 Georgia,serif}.metric span,.hint{color:var(--muted);font-size:.88rem}.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0 14px}label{display:block;font-size:.9rem;font-weight:650}input,select,textarea{width:100%;padding:8px;border:1px solid #98a89a;border-radius:4px;background:var(--white);color:var(--ink)}label>input,label>select,label>textarea{margin-top:4px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}.card{border:1px solid var(--rule);border-radius:6px;background:var(--white);padding:17px;overflow-wrap:anywhere}.card h3{margin:9px 0;font-size:1.16rem}.meta,.card p,.card summary{font-size:.91rem}.pill{display:inline-block;padding:3px 8px;border-radius:30px;background:var(--mint);font-size:.75rem;font-weight:650}.alert{background:var(--gold)}.amount{font-weight:680;margin:9px 0 4px}.card details{border-top:1px solid var(--rule);margin-top:11px;padding-top:9px}.card form{display:grid;gap:9px;margin-top:10px}.card a,.method a{font-weight:650}.method{margin-top:24px;border-top:1px solid var(--rule);padding-top:16px}summary{cursor:pointer;font-weight:650}.method p{margin-top:9px}.status{margin-top:10px;color:var(--green)}dialog{width:min(540px,calc(100% - 30px));padding:22px;border:1px solid var(--rule);border-radius:8px;background:var(--white);color:var(--ink)}dialog::backdrop{background:#112d29b0}dialog h2{font-size:2.1rem}dialog p{margin:10px 0}dialog code{overflow-wrap:anywhere}dialog .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}footer{border-top:1px solid var(--rule);padding:18px 0;color:var(--muted);font-size:.88rem}.empty{grid-column:1/-1;padding:24px 0}
+.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.top{background:var(--green);color:var(--white)}nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid #729087}.brand{font-weight:750;display:flex;align-items:center;gap:10px}.brand span{border:1px solid #a2b5a7;padding:2px 7px;font-size:.8rem}.hero{padding:58px 0 65px;display:grid;grid-template-columns:2fr 1fr;align-items:end;gap:28px}.hero h1{font-size:clamp(2.7rem,7.6vw,6rem);letter-spacing:-.065em}.hero h1 span{display:block;color:#d3e7b1}.tagline{font-size:clamp(1.06rem,2vw,1.35rem);margin:20px 0 9px}.author{color:#d3e7b1;font-size:.9rem}.hero aside{border-left:2px solid #a3bc86;padding:0 0 4px 18px;color:#edf3e7;max-width:350px}main{padding:38px 0 62px}.section-head{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}.section-head h2{font-size:clamp(2rem,4vw,3.15rem);letter-spacing:-.05em}.primary{background:var(--green);color:var(--white);border:1px solid var(--green);padding:9px 15px;border-radius:5px;text-decoration:none;font-weight:650}.secondary{background:transparent;color:var(--green);border:1px solid var(--rule);padding:8px 12px;border-radius:5px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:22px 0;border:1px solid var(--rule);border-radius:6px;background:var(--white)}.metric{padding:15px 18px}.metric+.metric{border-left:1px solid var(--rule)}.metric strong{display:block;font:2rem/1.1 Georgia,serif}.metric span,.hint{color:var(--muted);font-size:.88rem}.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0 14px}label{display:block;font-size:.9rem;font-weight:650}input,select,textarea{width:100%;padding:8px;border:1px solid #98a89a;border-radius:4px;background:var(--white);color:var(--ink)}label>input,label>select,label>textarea{margin-top:4px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}.card{border:1px solid var(--rule);border-radius:6px;background:var(--white);padding:17px;overflow-wrap:anywhere}.card h3{margin:9px 0;font-size:1.16rem}.meta,.card p,.card summary{font-size:.91rem}.pill{display:inline-block;padding:3px 8px;border-radius:30px;background:var(--mint);font-size:.75rem;font-weight:650}.alert{background:var(--gold)}.amount{font-weight:680;margin:9px 0 4px}.card details{border-top:1px solid var(--rule);margin-top:11px;padding-top:9px}.card form{display:grid;gap:9px;margin-top:10px}.card a,.method a{font-weight:650}.method{margin-top:24px;border-top:1px solid var(--rule);padding-top:16px}summary{cursor:pointer;font-weight:650}.method p{margin-top:9px}.status{margin-top:10px;color:var(--green)}dialog{width:min(540px,calc(100% - 30px));padding:22px;border:1px solid var(--rule);border-radius:8px;background:var(--white);color:var(--ink)}dialog::backdrop{background:#112d29b0}dialog h2{font-size:2.1rem}dialog p{margin:10px 0}dialog code{overflow-wrap:anywhere}dialog .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}footer{border-top:1px solid var(--rule);padding:18px 0;color:var(--muted);font-size:.88rem}.table-wrap{overflow-x:auto;margin-top:12px}table{width:100%;border-collapse:collapse;background:var(--white)}th,td{padding:10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}td:first-child{min-width:240px}td:nth-child(3){min-width:155px}.table-wrap .card{border:0;padding:0}.table-wrap .card h3{margin:6px 0}.table-wrap .card details{margin-top:5px;padding-top:5px}.chart-row{display:grid;grid-template-columns:minmax(105px,2fr) 3fr auto;gap:8px;align-items:center;margin:7px 0}.chart-row meter{width:100%}.facts{margin:8px 0;padding-left:20px}.empty{grid-column:1/-1;padding:24px 0}
 @media(max-width:680px){.wrap{width:calc(100% - 28px)}.hero{grid-template-columns:1fr;padding:40px 0;gap:22px}.cards{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters label:first-child{grid-column:1/-1}.metric{padding:12px 8px}.metric span{font-size:.76rem}nav>a{font-size:.88rem}}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
 <nav aria-label="Navegación principal"><div class="brand"><span aria-hidden="true">AC</span> Observatorio ciudadano</div><a href="#metodo">Metodología</a></nav>
-<div class="hero"><div><h1>AntiCorrupcion <span>Ciudadana</span></h1><p class="tagline">Sigue el dinero público y detecta irregularidades en cualquier país</p><p class="author">Autor: Josué Israel Cervantes Alvarado</p></div><aside>Compara montos de contratos y obras públicas. Consulta las fuentes y registra qué expedientes necesitan revisión.</aside></div>
+<div class="hero"><div><h1>AntiCorrupcion <span>Ciudadana</span></h1><p class="tagline">Sigue el dinero público y detecta irregularidades en cualquier país</p><p class="author">Autor: Josué Israel Cervantes Alvarado</p></div><aside>Explora contratos públicos, compara sus montos y revisa las fuentes. Las alertas señalan expedientes para investigar.</aside></div>
 </div></header>
 <main class="wrap">
-<div class="section-head"><h2 id="expedientes">Expedientes</h2><button class="primary" id="open-import" type="button">Importar CSV</button></div>
+<div class="section-head"><h2 id="expedientes">Expedientes</h2><div><button class="secondary" id="manual">Añadir contrato</button> <button class="primary" id="open-import">Importar CSV</button></div></div>
 <div class="metrics" aria-label="Resumen de la vista"><div class="metric"><strong id="total">0</strong><span>Expedientes visibles</span></div><div class="metric"><strong id="alerts">0</strong><span>Alertas por monto</span></div><div class="metric"><strong id="reviewed">0</strong><span>Expedientes revisados</span></div></div>
-<p class="hint" id="data-description"></p>
+<p class="hint" id="data-description"></p><p class="hint" id="coverage"></p>
 <div class="filters"><label>Conjunto de datos<select id="dataset"><option value="demo">Ejemplos ficticios</option><option value="local">Mis importaciones</option></select></label><label>País<select id="country"></select></label><label>Organismo<select id="agency"></select></label></div>
-<p class="status" id="status" role="status"></p><div class="cards" id="cards" aria-labelledby="expedientes"></div>
-<details class="method" id="metodo"><summary>Cómo se calcula una alerta</summary><p><strong>Variación porcentual</strong> = (monto final − monto inicial) ÷ monto inicial × 100. Esta versión marca los aumentos de al menos 20 %. Cada comparación usa la moneda del expediente.</p><p>La alerta señala un expediente para revisión. Consulta el contrato, sus modificaciones y las fuentes antes de sacar una conclusión.</p><p>El historial de importaciones y las notas residen en este navegador. La revisión admite los estados Pendiente, En revisión y Revisado.</p></details>
-</main>
+<details class="method"><summary>Más filtros</summary><div class="filters" id="extra-filters"></div></details>
+<p class="status" id="status" role="status"></p><div class="table-wrap"><table aria-labelledby="expedientes"><thead><tr><th scope="col">Expediente</th><th scope="col">País y organismo</th><th scope="col">Montos</th><th scope="col">Revisión</th></tr></thead><tbody id="cards"></tbody></table></div>
+<details class="method"><summary>Gráficos de los expedientes visibles</summary><label>Vista<select id="chart-mode"><option value="pais">Registros por país</option><option value="review">Estado de revisión</option><option value="variacion">Variación por organismo y año</option><option value="montos">Montos iniciales y finales</option></select></label><div id="chart"></div><button class="secondary" id="download-chart">Descargar gráfico (SVG)</button></details>
+<details class="method" id="metodo"><summary>Cómo funciona</summary><p><strong>Variación porcentual</strong> = (monto final − monto inicial) ÷ monto inicial × 100. Esta versión marca los aumentos de al menos 20 %. Cada comparación usa la moneda del expediente.</p><p>La alerta señala un expediente para revisión. Consulta el contrato, sus modificaciones y las fuentes antes de sacar una conclusión.</p><p>Los registros y notas se guardan en este navegador. Borrar sus datos o cambiar de dispositivo puede hacer que se pierdan. <a href="https://github.com/wexicos-create/SIFIA-JOCERVANTES/issues">Reportar un error del sitio</a>. Evita incluir notas privadas en reportes públicos.</p></details>
+<p class="hint method">La descarga incluye las fuentes y los filtros de la vista. Verifica los datos en la fuente original.</p><button class="secondary" id="export">↓ Descargar datos visibles (CSV)</button></main>
 <footer><div class="wrap">AntiCorrupcion Ciudadana · Observatorio internacional de contrataciones públicas</div></footer>
-<dialog id="import-dialog" aria-labelledby="import-title"><h2 id="import-title">Importar contratos</h2><p>Usa un archivo CSV UTF-8 separado por comas. Incluye un enlace público a la fuente en cada fila.</p><p><code>pais,organismo,contrato,moneda,monto_inicial,monto_final,fuente</code></p><form id="import-form"><label>Archivo CSV<input id="csv-file" required type="file" accept=".csv,text/csv"></label><p class="status" role="alert" id="import-error"></p><div class="actions"><button class="primary">Importar</button><button type="button" class="secondary" id="close-import">Cancelar</button><a class="secondary" id="template" download="plantilla-contratos.csv">Descargar plantilla</a></div></form></dialog>
-<noscript>Activa JavaScript para usar el observatorio.</noscript>
+<dialog id="import-dialog" aria-labelledby="import-title"><h2 id="import-title">Importar contratos</h2><p>Usa un archivo CSV UTF-8 separado por comas. Los campos obligatorios son país, organismo y descripción. Añade un enlace a la fuente cuando esté disponible.</p><p><code>pais,organismo,contrato,moneda,monto_inicial,monto_final,fuente</code></p><form id="import-form"><label>Archivo CSV<input id="csv-file" required type="file" accept=".csv,text/csv"></label><p class="status" role="alert" id="import-error"></p><div id="preview"></div><div class="actions"><button class="primary" id="confirm-import">Previsualizar</button><button type="button" class="secondary" id="close-import">Cancelar</button><a class="secondary" id="template" download="plantilla-contratos.csv">Descargar plantilla</a></div></form></dialog>
+<dialog id="manual-dialog"><h2>Añadir contrato</h2><form id="manual-form"><div id="manual-fields"></div><p id="manual-error" role="alert"></p><div class="actions"><button class="primary">Guardar contrato</button><button type="button" class="secondary" id="close-manual">Cancelar</button></div></form></dialog><noscript>Activa JavaScript para usar el observatorio.</noscript>
 <script>
 'use strict';
 const demo = [
@@ -36,8 +38,38 @@ const demo = [
   {id:'demo-3',pais:'España',organismo:'Entidad ficticia C',contrato:'Renovación de alumbrado público',moneda:'EUR',inicial:120000,final:150000},
   {id:'demo-4',pais:'México',organismo:'Entidad ficticia D',contrato:'Mejora de espacios comunitarios',moneda:'MXN',inicial:410000,final:405000}
 ];
-const headers = 'pais,organismo,contrato,moneda,monto_inicial,monto_final,fuente';
-const states = ['Pendiente','En revisión','Revisado'];
+const states = ['Sin revisar','En revisión','Revisado','Requiere más información'];
+const missing = 'No disponible en la fuente consultada';
+const fields = {pais:'País',organismo:'Organismo',contrato:'Descripción',moneda:'Moneda',monto_inicial:'Monto inicial',monto_final:'Monto final',fuente:'Fuente pública',identificador:'Identificador',proveedor:'Proveedor',fecha:'Fecha del contrato',tipo:'Tipo de contratación',estado:'Estado del contrato',modificaciones:'Modificaciones',consulta:'Fecha de consulta'};
+const csvKeys = Object.keys(fields);
+const filterFields = {proveedor:'Proveedor',year:'Año',tipo:'Tipo de contratación',estado:'Estado del contrato',review:'Estado de revisión',verification:'Verificación de fuente',currency:'Moneda para filtrar montos',minInitial:'Monto inicial mínimo',maxInitial:'Monto inicial máximo',minFinal:'Monto final mínimo',maxFinal:'Monto final máximo'};
+for (const [key,title] of Object.entries(filterFields)) {
+  const label = document.createElement('label');
+  label.textContent = title;
+  const isAmount = /^(min|max)/.test(key);
+  const control = document.createElement(isAmount ? 'input' : 'select');
+  if (isAmount) { control.type='number'; control.min='0'; control.step='any'; }
+  control.id = 'filter-'+key;
+  label.append(control);
+  document.getElementById('extra-filters').append(label);
+}
+for (const [key,title] of Object.entries(fields)) {
+  const label = document.createElement('label');
+  label.textContent = title;
+  const input = document.createElement('input');
+  input.name = key;
+  input.required = ['pais','organismo','contrato'].includes(key);
+  input.type = ['fecha','consulta'].includes(key) ? 'date' : key==='fuente' ? 'url' : 'text';
+  if (key.startsWith('monto')) input.inputMode='decimal';
+  label.append(input);
+  document.getElementById('manual-fields').append(label);
+}
+let visibleRows = [];
+const reviewState = row => model.reviews[row.id]?.state === 'Pendiente' ? states[0] : model.reviews[row.id]?.state || states[0];
+const verification = row => model.reviews[row.id]?.verified && row.fuente ? 'Contrastado por la persona usuaria' : row.fuente ? 'Fuente enlazada por contrastar' : 'Sin fuente enlazada';
+const valueFor = (row,key) => ({year:row.fecha?.slice(0,4),review:reviewState(row),verification:verification(row),currency:row.moneda})[key] ?? row[key] ?? '';
+const comparable = row => row.inicial > 0 && Number.isFinite(row.final) && /^[A-Z]{3}$/.test(row.moneda);
+
 const storageKey = 'anticorrupcion-ciudadana-v1';
 const el = id => document.getElementById(id);
 let model = {records:[],reviews:{}};
@@ -68,6 +100,7 @@ function unique(rows, key) {
 }
 function variance(record) { return (record.final / record.inicial - 1) * 100; }
 function flagged(record) {
+  if (!comparable(record)) return false;
   const initialCents = BigInt(Math.round(record.inicial * 100));
   const finalCents = BigInt(Math.round(record.final * 100));
   return finalCents * 5n >= initialCents * 6n;
@@ -83,13 +116,14 @@ function card(record) {
   const article = node('article', '', 'card');
   const isAlert = flagged(record);
   const isDemo = record.id.startsWith('demo-');
-  const change = new Intl.NumberFormat('es-MX',{maximumFractionDigits:1,signDisplay:'exceptZero'}).format(variance(record));
+  const change = comparable(record) ? new Intl.NumberFormat('es-MX',{maximumFractionDigits:1,signDisplay:'exceptZero'}).format(variance(record)) : null;
   article.append(node('span',isAlert?'Alerta por monto':'Sin alerta por monto',isAlert?'pill alert':'pill'),
-    node('h3',record.contrato),node('p',[record.pais,record.organismo,review.state || states[0]].join(' · '),'meta'),
-    node('p',money(record.inicial,record.moneda)+' → '+money(record.final,record.moneda),'amount'),
-    node('p','Variación '+change+' % · Umbral de alerta +20 %','hint'));
-  if (isDemo) article.append(node('p','Ejemplo ficticio · Sin fuente','hint'));
-  else {
+    node('h3',record.contrato),node('p',[record.pais,record.organismo,reviewState(record)].join(' · '),'meta'),
+    node('p',amountText(record.inicial,record.moneda)+' → '+amountText(record.final,record.moneda),'amount'),
+    node('p',change===null ? 'Dato que requiere verificación' : 'Variación '+change+' % · Umbral de alerta +20 %','hint'));
+  if (isDemo) article.append(node('p','EJEMPLO — no representa un contrato real','hint'));
+  else article.append(node('p',verification(record),'hint'));
+  if (record.fuente) {
     const link = node('a','Abrir fuente pública');
     link.href = source(record.fuente);
     link.target = '_blank';
@@ -97,11 +131,18 @@ function card(record) {
     article.append(link);
   }
   const details = node('details');
+  const facts = node('ul','','facts');
+  for (const [name,key] of [['Identificador','identificador'],['Proveedor','proveedor'],['Fecha del contrato','fecha'],['Tipo','tipo'],['Estado del contrato','estado'],['Modificaciones','modificaciones'],['Fuente','fuente'],['Fecha de consulta o importación','consulta']]) {
+    const value = key==='consulta' ? record.consulta || record.imported?.slice(0,10) : record[key];
+    facts.append(node('li',name+' · '+(value || missing)));
+  }
+  const explanation = node('p',change===null ? 'Para calcular el cambio hacen falta ambos montos, una moneda y un monto inicial mayor a cero.' :
+    'Cálculo · (monto final − monto inicial) ÷ monto inicial × 100. '+(isAlert?'El aumento alcanza el umbral del 20 %. ':'El aumento queda por debajo del umbral del 20 %. ')+'Revisa las modificaciones en la fuente para interpretar la diferencia.');
   const form = node('form');
   const stateLabel = node('label','Estado');
   const state = node('select');
   for (const item of states) state.add(new Option(item,item));
-  state.value = review.state || states[0];
+  state.value = reviewState(record);
   stateLabel.append(state);
   const noteLabel = node('label','Nota de revisión');
   const note = node('textarea');
@@ -110,11 +151,19 @@ function card(record) {
   note.value = review.note || '';
   noteLabel.append(note);
   const submit = node('button','Guardar revisión','secondary');
-  form.append(stateLabel,noteLabel,submit);
+  const verifyLabel = node('label',' Contrasté los datos con la fuente enlazada');
+  const verified = node('input');
+  verified.type='checkbox';
+  verified.style.width='auto';
+  verified.checked=Boolean(review.verified);
+  verifyLabel.prepend(verified);
+  form.append(stateLabel,noteLabel);
+  if (record.fuente) form.append(verifyLabel);
+  form.append(submit);
   form.addEventListener('submit', event => {
     event.preventDefault();
     try {
-      save({...model,reviews:{...model.reviews,[record.id]:{state:state.value,note:note.value}}});
+      save({...model,reviews:{...model.reviews,[record.id]:{state:state.value,note:note.value,verified:verified.checked}}});
       render();
       const updated = [...el('cards').children].find(entry => entry.dataset.recordId === record.id);
       if (updated) {
@@ -126,7 +175,7 @@ function card(record) {
       el('status').textContent = 'No se pudo guardar la revisión en este navegador.';
     }
   });
-  details.append(node('summary','Revisar expediente'),form);
+  details.append(node('summary','Ver expediente'),facts,explanation,form);
   article.dataset.recordId = record.id;
   article.append(details);
   return article;
@@ -140,13 +189,34 @@ function render() {
   const grouped = records.filter(row => !country || row.pais === country);
   options(el('agency'),'Todos los organismos',unique(grouped,'organismo'));
   const agency = el('agency').value;
-  const visible = grouped.filter(row => !agency || row.organismo === agency);
+  const candidates = grouped.filter(row => !agency || row.organismo === agency);
+  const filters = Object.entries(filterFields).filter(([key])=>!/^(min|max)/.test(key));
+  for (const [key,label] of filters) options(el('filter-'+key),'Cualquiera · '+label,[...new Set(candidates.map(row=>valueFor(row,key)).filter(Boolean))].sort());
+  const currency = el('filter-currency').value;
+  const amountFilters = [['minInitial','inicial'],['maxInitial','inicial'],['minFinal','final'],['maxFinal','final']];
+  for (const [key] of amountFilters) el('filter-'+key).disabled = !currency;
+  const visible = candidates.filter(row =>
+    filters.every(([key])=>!el('filter-'+key).value || valueFor(row,key)===el('filter-'+key).value) &&
+    amountFilters.every(([key,amount])=>!currency || !el('filter-'+key).value || (Number.isFinite(row[amount]) &&
+      (key.startsWith('min') ? row[amount]>=Number(el('filter-'+key).value) : row[amount]<=Number(el('filter-'+key).value)))));
+  visibleRows = visible;
+  el('coverage').textContent = coverage(visible, showingDemo);
+  drawChart();
   el('total').textContent = visible.length;
   el('alerts').textContent = visible.filter(flagged).length;
   el('reviewed').textContent = visible.filter(row => model.reviews[row.id]?.state === 'Revisado').length;
   el('cards').replaceChildren();
-  for (const row of visible) el('cards').append(card(row));
-  if (!visible.length) el('cards').append(node('p','No hay expedientes en esta vista. Puedes importar un CSV.','empty'));
+  for (const row of visible) {
+    const entry=node('tr'), detail=node('td');
+    entry.dataset.recordId=row.id;
+    detail.append(card(row));
+    entry.append(detail,node('td',row.pais+' · '+row.organismo),node('td',amountText(row.inicial,row.moneda)+' → '+amountText(row.final,row.moneda)),node('td',reviewState(row)));
+    el('cards').append(entry);
+  }
+  if (!visible.length) {
+    const entry=node('tr'), cell=node('td','No hay expedientes en esta vista. Puedes importar un CSV.');
+    cell.colSpan=4;entry.append(cell);el('cards').append(entry);
+  }
 }
 function parseCsv(input) {
   const lines = [];
@@ -172,29 +242,145 @@ function parseCsv(input) {
   finishRow();
   return lines;
 }
+function makeContract(data, index) {
+  const error = new Error('Registro '+index+': revisa los campos, montos, fechas y enlace.');
+  if (Object.values(data).some(value=>value.length>1000) || !data.pais || !data.organismo || !data.contrato) throw error;
+  const amount = value => {
+    if (!value) return null;
+    if (!/^\d+(\.\d{1,2})?$/.test(value) || !Number.isSafeInteger(Math.round(Number(value)*100))) throw error;
+    return Number(value);
+  };
+  const moneda = (data.moneda || '').toUpperCase();
+  if (moneda && !/^[A-Z]{3}$/.test(moneda)) throw error;
+  for (const date of [data.fecha,data.consulta]) {
+    if (date && (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date)) || new Date(date).toISOString().slice(0,10)!==date)) throw error;
+  }
+  let fuente='';
+  try { if(data.fuente) fuente=source(data.fuente); } catch { throw error; }
+  const inicial=amount(data.monto_inicial), final=amount(data.monto_final);
+  const id='csv-'+JSON.stringify([data.pais,data.organismo,data.contrato,moneda,inicial,final,fuente]);
+  return {...data,id,moneda,inicial,final,fuente,imported:new Date().toISOString()};
+}
 function loadContracts(text) {
   const rows = parseCsv(text);
-  if (rows.shift()?.map(value => value.toLowerCase()).join(',') !== headers) throw new Error('Los encabezados deben coincidir con la plantilla.');
+  const keys = rows.shift()?.map(value => value.toLowerCase()) || [];
+  if (!['pais','organismo','contrato'].every(key=>keys.includes(key)) || new Set(keys).size!==keys.length) throw new Error('Incluye encabezados únicos para país, organismo y contrato. Usa la plantilla.');
   if (!rows.length || rows.length > 500) throw new Error('Incluye de 1 a 500 contratos por archivo.');
-  return rows.map((row,index) => {
-    const [pais,organismo,contrato,rawCurrency,initial,final,link] = row;
-    const moneda = rawCurrency?.toUpperCase();
-    const inicial = Number(initial), last = Number(final);
-    const isAmount = value => /^\d+(\.\d{1,2})?$/.test(value);
-    const invalid = () => new Error('Registro '+(index+1)+': verifica los campos, montos y enlace público.');
-    if (row.length !== 7 || row.some(value => !value || value.length > 1000) || !/^[A-Z]{3}$/.test(moneda) ||
-        !isAmount(initial) || !isAmount(final) || !(inicial > 0) || !Number.isSafeInteger(Math.round(inicial*100)) ||
-        !Number.isSafeInteger(Math.round(last*100))) throw invalid();
-    let fuente;
-    try { fuente = source(link); } catch { throw invalid(); }
-    const id = 'csv-'+JSON.stringify([pais,organismo,contrato,moneda,inicial,last,fuente]);
-    return {id,pais,organismo,contrato,moneda,inicial,final:last,fuente};
+  return rows.map((row,index)=>{
+    if (row.length!==keys.length) throw new Error('Cantidad incorrecta de columnas en el registro '+(index+1)+'.');
+    return makeContract(Object.fromEntries(keys.flatMap((key,i)=>csvKeys.includes(key)?[[key,row[i]]]:[])),index+1);
   });
 }
+function insertContracts(incoming) {
+  const records = new Map(model.records.map(row=>[row.id,row]));
+  const before=records.size;
+  for (const row of incoming) if(!records.has(row.id)) records.set(row.id,row);
+  save({...model,records:[...records.values()]});
+  el('dataset').value='local';
+  for(const key of ['country','agency',...Object.keys(filterFields).map(key=>'filter-'+key)]) el(key).value='';
+  render();
+  el('status').textContent='Expedientes agregados: '+(records.size-before)+'.';
+}
+function amountText(amount,currency) {
+  if(!Number.isFinite(amount)) return missing;
+  return /^[A-Z]{3}$/.test(currency) ? money(amount,currency) : new Intl.NumberFormat('es-MX').format(amount)+' (moneda sin indicar)';
+}
+function coverage(rows,isDemo) {
+  const years=rows.map(row=>row.fecha?.slice(0,4)).filter(Boolean).sort();
+  const latest=rows.map(row=>row.imported || row.consulta).filter(Boolean).sort().at(-1);
+  const countries=unique(rows,'pais').length, agencies=unique(rows,'organismo').length;
+  return countries+' países · '+agencies+' organismos · '+rows.filter(row=>row.fuente).length+' con enlace de fuente · '+rows.filter(row=>reviewState(row)!==states[2]).length+' pendientes de revisión. Periodo: '+(years.length ? years[0]+' a '+years.at(-1)+' (fechas disponibles)' : 'sin fechas informadas')+'. Actualización: '+(latest?.slice(0,10) || 'sin fecha registrada')+'. '+(isDemo?'EJEMPLO — no representa un contrato real.':'Cobertura limitada a los expedientes visibles.');
+}
+function chartData() {
+  const mode=el('chart-mode').value;
+  const groups=new Map();
+  for(const row of visibleRows){
+    if(mode==='montos') {
+      if(!comparable(row)) continue;
+      for(const [phase,value] of [['Inicial',row.inicial],['Final',row.final]]) {
+        const key=row.moneda+' · '+phase;
+        const entry=groups.get(key)||{sum:0,count:0,unit:row.moneda};
+        entry.sum+=value;entry.count++;groups.set(key,entry);
+      }
+      continue;
+    }
+    const key=mode==='review'?reviewState(row):mode==='variacion'?row.organismo+' · '+(row.fecha?.slice(0,4)||'sin año'):row.pais;
+    if(mode==='variacion'&&!comparable(row)) continue;
+    const entry=groups.get(key)||{sum:0,count:0,unit:mode==='variacion'?'% medio':'registros'};
+    entry.sum+=mode==='variacion'?variance(row):1;
+    entry.count++;groups.set(key,entry);
+  }
+  return [...groups].map(([key,{sum,count,unit}])=>({key,value:unit==='% medio'?sum/count:sum,count,unit}));
+}
+function chartCaption() {
+  return coverage(visibleRows,el('dataset').value==='demo')+' Fuente: expedientes visibles y enlaces en sus fichas. '+(visibleRows.length<10?'Muestra pequeña. ':'')+(el('chart-mode').value==='montos'?'Los totales y escalas se calculan por moneda. ':'');
+}
+function chartLabel(row) {
+  return new Intl.NumberFormat('es-MX',{maximumFractionDigits:1}).format(row.value)+' '+row.unit+' ('+row.count+' expedientes)';
+}
+function barLimit(data,row) {
+  return Math.max(1,...data.filter(entry=>entry.unit===row.unit).map(entry=>Math.abs(entry.value)));
+}
+function drawChart() {
+  const chart=el('chart'), data=chartData();
+  chart.replaceChildren(node('p',chartCaption(),'hint'));
+  if(!data.length) chart.append(node('p','No hay suficientes campos para esta vista.'));
+  for(const row of data) {
+    const line=node('div','','chart-row'), bar=node('meter');
+    bar.max=barLimit(data,row);bar.value=Math.abs(row.value);
+    bar.setAttribute('aria-label',row.key+' · '+chartLabel(row));
+    line.append(node('span',row.key),bar,node('span',chartLabel(row)));
+    chart.append(line);
+  }
+}
+function download(name,data,type) {
+  const url=URL.createObjectURL(new Blob([data],{type}));
+  const link=node('a');link.href=url;link.download=name;link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function csvField(value) {
+  let text=String(value??'');
+  if(typeof value==='string' && /^[\s]*[=+@-]/.test(text)) text="'"+text;
+  return '"'+text.replaceAll('"','""')+'"';
+}
+el('export').addEventListener('click',()=>{
+  const selected=['dataset','country','agency',...Object.keys(filterFields).map(key=>'filter-'+key)];
+  const filters=JSON.stringify(Object.fromEntries(selected.filter(key=>!el(key).disabled && el(key).value).map(key=>[key,el(key).value])));
+  const date=new Date().toISOString();
+  const rows=[['exportado','filtros','conjunto','total_visible',...csvKeys,'revision','verificacion','fecha_importacion']];
+  for(const row of visibleRows) rows.push([date,filters,el('dataset').value==='demo'?'EJEMPLO — no representa un contrato real':'Importación local',visibleRows.length,...csvKeys.map(key=>key==='monto_inicial'?row.inicial:key==='monto_final'?row.final:row[key]),reviewState(row),verification(row),row.imported]);
+  if(!visibleRows.length) rows.push([date,filters,el('dataset').value,0,...Array(csvKeys.length+3).fill('')]);
+  download('contratos-visibles.csv','\uFEFF'+rows.map(row=>row.map(csvField).join(',')).join('\r\n'),'text/csv;charset=utf-8');
+});
+el('chart-mode').addEventListener('change',drawChart);
+el('download-chart').addEventListener('click',()=>{
+  const data=chartData(), escape=value=>String(value).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]);
+  const caption=chartCaption().match(/.{1,104}(?:\s+|$)|.{1,104}/g)||[];
+  const offset=55+caption.length*19;
+  const bars=data.map((row,i)=>{
+    const y=offset+i*42;
+    return '<text x="20" y="'+y+'">'+escape(row.key+' · '+chartLabel(row))+'</text><rect x="20" y="'+(y+6)+'" width="'+(760*Math.abs(row.value)/barLimit(data,row))+'" height="8" fill="#24745d"/>';
+  }).join('');
+  download('grafico-contratos.svg','<svg xmlns="http://www.w3.org/2000/svg" width="920" height="'+(offset+data.length*42+24)+'" font-family="sans-serif" font-size="14"><title>AntiCorrupcion Ciudadana</title><text x="20" y="24" font-weight="bold">'+escape(el('chart-mode').selectedOptions[0].textContent)+'</text>'+caption.map((line,i)=>'<text x="20" y="'+(44+i*19)+'">'+escape(line)+'</text>').join('')+bars+'</svg>','image/svg+xml');
+});
+for(const key of Object.keys(filterFields)) el('filter-'+key).addEventListener('change',render);
+el('manual').addEventListener('click',()=>el('manual-dialog').showModal());
+el('close-manual').addEventListener('click',()=>el('manual-dialog').close());
+el('manual-form').addEventListener('submit',event=>{
+  event.preventDefault();
+  try {
+    insertContracts([makeContract(Object.fromEntries([...new FormData(event.target)].map(([key,value])=>[key,value.trim()])),1)]);
+    event.target.reset();el('manual-error').textContent='';el('manual-dialog').close();
+  } catch(problem){el('manual-error').textContent=problem.message;}
+});
 for (const id of ['dataset','country','agency']) el(id).addEventListener('change', () => { el('status').textContent = ''; render(); });
 el('open-import').addEventListener('click',() => el('import-dialog').showModal());
 el('close-import').addEventListener('click',() => el('import-dialog').close());
-el('template').href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(headers+'\n');
+el('template').href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvKeys.join(',')+'\n');
+let pendingImport = null;
+el('csv-file').addEventListener('change',()=>{
+  pendingImport=null;el('preview').replaceChildren();el('confirm-import').textContent='Previsualizar';el('import-error').textContent='';
+});
 el('import-form').addEventListener('submit',async event => {
   event.preventDefault();
   const file = el('csv-file').files[0];
@@ -204,17 +390,18 @@ el('import-form').addEventListener('submit',async event => {
   button.disabled = true;
   try {
     if (!file || file.size > 2_000_000) throw new Error('Selecciona un CSV de hasta 2 MB.');
-    const incoming = loadContracts(await file.text());
-    const records = new Map(model.records.map(row => [row.id,row]));
-    const before = records.size;
-    for (const row of incoming) records.set(row.id,row);
-    save({...model,records:[...records.values()]});
-    el('dataset').value = 'local';
-    el('country').value = '';
-    el('agency').value = '';
-    render();
-    el('status').textContent = records.size === before ? 'Todos los expedientes del archivo ya estaban importados.' : 'Expedientes agregados: '+(records.size-before)+'.';
+    if (pendingImport?.file !== file) {
+      const rows=loadContracts(await file.text());
+      if(el('csv-file').files[0]!==file) return;
+      pendingImport={file,rows};
+      el('preview').replaceChildren(node('p',rows.length+' registros preparados. Vista previa de los primeros cinco.'));
+      for(const row of rows.slice(0,5)) el('preview').append(node('p',row.pais+' · '+row.organismo+' · '+row.contrato+' · '+amountText(row.inicial,row.moneda)+' → '+amountText(row.final,row.moneda)));
+      button.textContent='Guardar importación';
+      return;
+    }
+    insertContracts(pendingImport.rows);
     event.target.reset();
+    pendingImport=null;el('preview').replaceChildren();button.textContent='Previsualizar';
     el('import-dialog').close();
   } catch (problem) {
     error.textContent = problem.name === 'QuotaExceededError' || problem.name === 'SecurityError' ? 'El navegador no permitió guardar los contratos.' : problem.message;
