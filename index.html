@@ -17,7 +17,7 @@
 <body>
 <header class="top"><div class="wrap">
 <nav aria-label="Navegación principal"><div class="brand"><span aria-hidden="true">AC</span> Observatorio ciudadano</div><a href="#metodo">Metodología</a></nav>
-<div class="hero"><div><h1>AntiCorrupcion <span>Ciudadana</span></h1><p class="tagline">Sigue el dinero público y detecta irregularidades en cualquier país</p><p class="author">Autor: Josué Israel Cervantes Alvarado</p></div><aside>Explora contratos públicos, compara sus montos y revisa las fuentes. Las alertas señalan expedientes para investigar.</aside></div>
+<div class="hero"><div><h1>AntiCorrupcion <span>Ciudadana</span></h1><p class="tagline">Sigue el dinero público y detecta irregularidades en cualquier país</p><p class="author">Autor: Josué Israel Cervantes Alavarado</p></div><aside>Explora contratos públicos, compara sus montos y revisa las fuentes. Las alertas señalan expedientes para investigar.</aside></div>
 </div></header>
 <main class="wrap">
 <section class="research" aria-labelledby="meter-title">
@@ -78,6 +78,8 @@
   <div id="geo-summary"></div><div id="geo-results"></div>
   <div class="research-actions"><button id="geo-download" class="primary" type="button" disabled>↓ Descargar información (CSV)</button><button id="geo-copy" class="secondary" type="button" disabled>📋 Copiar información</button></div>
   <p id="geo-export-status" role="status"></p>
+  <div class="research-actions"><button id="publish-open" type="button" class="primary" disabled>Publicar investigación</button></div>
+  <p class="hint">Las investigaciones pasan a revisión. Se permiten hasta dos solicitudes por día desde este navegador. Los intentos repetidos después del límite activan una cuota de una por semana.</p>
   <details id="evidence-panel">
     <summary>Archivo histórico de evidencia <span aria-hidden="true">🗂️</span></summary>
     <p>Guarda el HTML original de los portales habilitados, con URL, hora UTC y huella SHA-256. Las capturas se guardan en este navegador y pueden descargarse para conservarlas junto al archivo de <a href="https://intautor.vercel.app/">IntAutor</a>.</p>
@@ -91,7 +93,7 @@
 <details><summary>💬 Chat de ayuda</summary><p>Elige el tipo de ayuda que necesitas.</p>
 <div class="research-actions"><button class="secondary" type="button" data-help="buscar">Cómo buscar</button><button class="secondary" type="button" data-help="error">Corregir un resultado</button><button class="secondary" type="button" data-help="contacto">Contactar al equipo</button></div>
 <p id="help-answer" role="status"></p></details>
-<form id="contact-form">
+<button type="button" class="secondary" id="ask-moderation">Hablar sobre un límite o el uso de información</button><form id="contact-form">
 <label>Asunto<input id="contact-subject" required maxlength="100"></label>
 <label>Mensaje<textarea id="contact-message" required maxlength="2000" rows="4"></textarea></label>
 <p class="hint">El formulario prepara un reporte público en GitHub para que lo revises antes de publicarlo. Evita incluir mensajes privados o datos personales.</p>
@@ -100,9 +102,17 @@
 <p id="contact-status" role="status"></p><a id="contact-link" target="_blank" rel="noopener noreferrer" hidden>Revisar reporte en GitHub</a>
 </section>
 </main>
-<footer><div class="wrap">AntiCorrupcion Ciudadana · Observatorio internacional de contrataciones públicas</div></footer>
+<footer><div class="wrap"><strong>Herramientas a servicio de la comunidad · CA Enterprise</strong><br>Autor: Josué Israel Cervantes Alavarado</div></footer>
 <dialog id="import-dialog" aria-labelledby="import-title"><h2 id="import-title">Importar contratos</h2><p>Usa un archivo CSV UTF-8 separado por comas. Los campos obligatorios son país, organismo y descripción. Añade un enlace a la fuente cuando esté disponible.</p><p><code>pais,organismo,contrato,moneda,monto_inicial,monto_final,fuente</code></p><form id="import-form"><label>Archivo CSV<input id="csv-file" required type="file" accept=".csv,text/csv"></label><p class="status" role="alert" id="import-error"></p><div id="preview"></div><div class="actions"><button class="primary" id="confirm-import">Previsualizar</button><button type="button" class="secondary" id="close-import">Cancelar</button><a class="secondary" id="template" download="plantilla-contratos.csv">Descargar plantilla</a></div></form></dialog>
-<dialog id="manual-dialog"><h2>Añadir contrato</h2><form id="manual-form"><div id="manual-fields"></div><p id="manual-error" role="alert"></p><div class="actions"><button class="primary">Guardar contrato</button><button type="button" class="secondary" id="close-manual">Cancelar</button></div></form></dialog><noscript>Activa JavaScript para usar el observatorio.</noscript>
+<dialog id="manual-dialog"><h2>Añadir contrato</h2><form id="manual-form"><div id="manual-fields"></div><p id="manual-error" role="alert"></p><div class="actions"><button class="primary">Guardar contrato</button><button type="button" class="secondary" id="close-manual">Cancelar</button></div></form></dialog><dialog id="publication-dialog" aria-labelledby="publication-heading"><h2 id="publication-heading">Publicar investigación</h2>
+<form id="publication-form">
+<label>Título<input id="publication-title" maxlength="100" required></label>
+<label>Qué debe revisar el equipo<textarea id="publication-description" maxlength="800" rows="4" required></textarea></label>
+<label>Enlace directo al documento oficial<input id="publication-source" type="url" maxlength="400" required></label>
+<p class="hint">Uso comunitario. Queda prohibida la reutilización para campañas partidistas, propaganda, hostigamiento o ataques políticos. El equipo puede revisar reportes de uso indebido y aplicar medidas de moderación en los espacios que administra.</p>
+<label><input type="checkbox" id="publication-accept" required style="width:auto"> Acepto estas condiciones y entiendo que GitHub muestra públicamente lo que decida enviar.</label>
+<div class="actions"><button class="primary">Preparar solicitud</button><button id="publish-close" type="button" class="secondary">Cerrar</button></div>
+</form><p id="publication-error" role="status"></p><a id="publication-link" target="_blank" rel="noopener noreferrer" hidden>Revisar y enviar en GitHub</a></dialog><noscript>Activa JavaScript para usar el observatorio.</noscript>
 <script>
 'use strict';
 const demo = [
@@ -629,20 +639,25 @@ function setReport(report) {
   geoReport=report;
   el('geo-download').disabled=!report;
   el('geo-copy').disabled=!report;
+  el('publish-open').disabled=!report?.sources.length;
   el('geo-export-status').textContent='';
 }
-el('geo-download').addEventListener('click',()=>{
+el('geo-download').addEventListener('click',async()=>{
   if(!geoReport) return;
-  const {place,question,matter,signal,scope,provider,date,sources}=geoReport;
-  const header=['Ubicación solicitada','Pregunta','Materia','Tipo de señal','Alcance consultado','Índice','Fecha de consulta','Referencia','Medio','Fecha del índice','Estado de evidencia','URL'];
-  const rows=(sources.length?sources:[{}]).map(source=>[place,question,matter,signal,scope,provider,date,source.title,source.host,source.date,source.title?'Referencia por contrastar':'Sin referencias en los índices consultados',source.url]);
+  const report=geoReport;
+  const {place,question,matter,signal,scope,provider,date,sources}=report;
+  const hash=await reportFingerprint(report);
+  const header=['Ubicación solicitada','Pregunta','Materia','Tipo de señal','Alcance consultado','Índice','Fecha de consulta','Referencia','Medio','Fecha del índice','Estado de evidencia','URL','Huella SHA-256 del informe','Condiciones de uso','Créditos'];
+  const rows=(sources.length?sources:[{}]).map(source=>[place,question,matter,signal,scope,provider,date,source.title,source.host,source.date,source.title?'Referencia por contrastar':'Sin referencias en los índices consultados',source.url,hash,usageNotice,authorCredit]);
   download('investigacion-territorial.csv','\uFEFF'+[header,...rows].map(row=>row.map(csvField).join(',')).join('\r\n'),'text/csv;charset=utf-8');
 });
 el('geo-copy').addEventListener('click',async()=>{
   if(!geoReport) return;
-  const {place,question,matter,signal,scope,provider,date,sources}=geoReport;
+  const report=geoReport;
+  const {place,question,matter,signal,scope,provider,date,sources}=report;
+  const hash=await reportFingerprint(report);
   const lines=[place,question,matter,signal,scope,provider+' · '+date,sources.length?sources.length+' referencias por contrastar':'Sin referencias en los índices consultados.',...sources.map(source=>[source.title,source.host,source.date,source.url].filter(Boolean).join(' · '))].filter(Boolean);
-  try { await navigator.clipboard.writeText(lines.join('\n')); el('geo-export-status').textContent='Información copiada al portapapeles.'; }
+  try { await navigator.clipboard.writeText([...lines,'Huella SHA-256: '+hash,usageNotice,authorCredit].join('\n')); el('geo-export-status').textContent='Información copiada al portapapeles.'; }
   catch { el('geo-export-status').textContent='El navegador no permitió copiar. Puedes descargar el CSV.'; }
 });
 function geographicSummary(sources) {
@@ -768,6 +783,93 @@ el('contact-form').addEventListener('submit',event=>{
   url.search=new URLSearchParams({title:subject,body});
   const link=el('contact-link');link.href=url.href;link.hidden=false;
   el('contact-status').textContent='Reporte preparado. Revisa el texto antes de publicarlo en GitHub.';
+});
+const usageNotice='Uso comunitario · Se prohíbe reutilizar esta investigación para campañas partidistas, propaganda, hostigamiento o ataques políticos. Conserva la atribución, la fecha, las fuentes y el estado de verificación.';
+const authorCredit='Herramientas a servicio de la comunidad · CA Enterprise · Autor: Josué Israel Cervantes Alavarado';
+async function reportFingerprint(report) {
+  const canonical=JSON.stringify({
+    place:report.place,question:report.question,matter:report.matter,signal:report.signal,
+    scope:report.scope,provider:report.provider,date:report.date,
+    sources:report.sources.map(({title,host,date,url})=>({title,host,date,url}))
+  });
+  const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(canonical));
+  return Array.from(new Uint8Array(bytes),byte=>byte.toString(16).padStart(2,'0')).join('');
+}
+
+const publicationKey='anticorrupcion-solicitudes-v1';
+const dayFormat=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Mexico_City',year:'numeric',month:'2-digit',day:'2-digit'});
+const dayMs=24*60*60*1000, weekMs=7*dayMs;
+function publicationState(now) {
+  const data=JSON.parse(localStorage.getItem(publicationKey))||{};
+  return {
+    dates:Array.isArray(data.dates)?data.dates.filter(date=>Number.isFinite(date)&&now-date<weekMs):[],
+    blockedAttempts:Array.isArray(data.blockedAttempts)?data.blockedAttempts.filter(date=>Number.isFinite(date)&&now-date<dayMs):[],
+    weeklyUntil:Number.isFinite(data.weeklyUntil)?data.weeklyUntil:0
+  };
+}
+function registerPublication(now) {
+  const state=publicationState(now);
+  if(state.weeklyUntil>now) {
+    const last=state.dates.at(-1);
+    if(last&&now-last<weekMs) return 'Tu cuota local está temporalmente limitada a una solicitud cada siete días.';
+  }
+  const today=state.dates.filter(date=>dayFormat.format(date)===dayFormat.format(now));
+  if(today.length>=2) {
+    state.blockedAttempts.push(now);
+    if(state.blockedAttempts.length>=3) state.weeklyUntil=now+weekMs;
+    localStorage.setItem(publicationKey,JSON.stringify(state));
+    return state.weeklyUntil>now ? 'Por los intentos repetidos después de alcanzar el límite, se activó la cuota de una solicitud cada siete días.' : 'Ya preparaste dos solicitudes hoy.';
+  }
+  state.dates.push(now);
+  if(state.weeklyUntil>now) state.weeklyUntil=now+weekMs;
+  localStorage.setItem(publicationKey,JSON.stringify(state));
+  return '';
+}
+el('ask-moderation').addEventListener('click',()=>{
+  el('contact-subject').value='Consulta de moderación sobre el uso de información';
+  el('contact-message').value='Quiero aclarar el uso que doy a la información o solicitar revisión de un límite. Mi consulta es: ';
+  el('contact-title').scrollIntoView({block:'start'});
+  el('contact-message').focus();
+});
+el('publish-open').addEventListener('click',()=>{
+  if(!geoReport?.sources.length) return;
+  el('publication-form').reset();
+  el('publication-error').textContent='';
+  el('publication-link').hidden=true;
+  el('publication-dialog').showModal();
+});
+el('publish-close').addEventListener('click',()=>el('publication-dialog').close());
+el('publication-form').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const report=geoReport, button=event.submitter, status=el('publication-error'), link=el('publication-link');
+  if(!report?.sources.length) return;
+  link.hidden=true;button.disabled=true;
+  try {
+    const title=el('publication-title').value.trim(), explanation=el('publication-description').value.trim();
+    const officialUrl=new URL(el('publication-source').value.trim());
+    if(officialUrl.protocol!=='https:'||officialUrl.username||officialUrl.password||!archiveHosts.has(officialUrl.hostname))
+      throw new Error('Añade el enlace directo de un portal oficial habilitado en el archivo de evidencia.');
+    if(!title||!explanation||!el('publication-accept').checked) throw new Error('Completa el formulario y confirma las condiciones.');
+    const hash=await reportFingerprint(report);
+    const body=[
+      'Solicitud de publicación · Pendiente de revisión editorial',
+      '**Lugar y búsqueda:** '+report.place+' · '+report.matter+' · '+report.signal+' · '+report.scope,
+      '**Qué debe revisarse:** '+explanation,
+      '**Documento oficial aportado:** '+officialUrl.href,
+      '**Referencias por contrastar:** '+report.sources.length+'. Se adjuntan hasta cinco enlaces.',
+      ...report.sources.slice(0,5).map(source=>'- '+source.url),
+      '**Huella SHA-256 del informe de búsqueda:** '+hash,
+      usageNotice,authorCredit
+    ].join('\n\n');
+    const url=new URL('https://github.com/wexicos-create/SIFIA-JOCERVANTES/issues/new');
+    url.search=new URLSearchParams({title,body});
+    if(url.href.length>6500) throw new Error('Acorta la explicación antes de preparar la solicitud.');
+    const reason=registerPublication(Date.now());
+    if(reason) throw new Error(reason);
+    link.href=url.href;link.hidden=false;
+    status.textContent='Solicitud preparada. Puedes revisar el borrador y decidir si lo envías a moderación en GitHub.';
+  } catch(error) {status.textContent=error.name==='QuotaExceededError'||error.name==='SecurityError'?'El navegador no permite guardar la cuota local.':error.message;}
+  finally {button.disabled=false;}
 });
 </script>
 </body>
