@@ -10,6 +10,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.5 system-ui,sans-serif}button,input,select,textarea{font:inherit}button,select{cursor:pointer}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #b35a16;outline-offset:3px}h1,h2,h3,p{margin:0}h1,h2,h3{line-height:1.08}h1,h2{font-family:Georgia,serif;font-weight:normal}
 .wrap{width:min(1120px,calc(100% - 40px));margin:auto}.top{background:var(--green);color:var(--white)}nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid #729087}.brand{font-weight:750;display:flex;align-items:center;gap:10px}.brand span{border:1px solid #a2b5a7;padding:2px 7px;font-size:.8rem}.hero{padding:58px 0 65px;display:grid;grid-template-columns:2fr 1fr;align-items:end;gap:28px}.hero h1{font-size:clamp(2.7rem,7.6vw,6rem);letter-spacing:-.065em}.hero h1 span{display:block;color:#d3e7b1}.tagline{font-size:clamp(1.06rem,2vw,1.35rem);margin:20px 0 9px}.author{color:#d3e7b1;font-size:.9rem}.hero aside{border-left:2px solid #a3bc86;padding:0 0 4px 18px;color:#edf3e7;max-width:350px}main{padding:38px 0 62px}.section-head{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}.section-head h2{font-size:clamp(2rem,4vw,3.15rem);letter-spacing:-.05em}.primary{background:var(--green);color:var(--white);border:1px solid var(--green);padding:9px 15px;border-radius:5px;text-decoration:none;font-weight:650}.secondary{background:transparent;color:var(--green);border:1px solid var(--rule);padding:8px 12px;border-radius:5px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:22px 0;border:1px solid var(--rule);border-radius:6px;background:var(--white)}.metric{padding:15px 18px}.metric+.metric{border-left:1px solid var(--rule)}.metric strong{display:block;font:2rem/1.1 Georgia,serif}.metric span,.hint{color:var(--muted);font-size:.88rem}.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0 14px}label{display:block;font-size:.9rem;font-weight:650}input,select,textarea{width:100%;padding:8px;border:1px solid #98a89a;border-radius:4px;background:var(--white);color:var(--ink)}label>input,label>select,label>textarea{margin-top:4px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}.card{border:1px solid var(--rule);border-radius:6px;background:var(--white);padding:17px;overflow-wrap:anywhere}.card h3{margin:9px 0;font-size:1.16rem}.meta,.card p,.card summary{font-size:.91rem}.pill{display:inline-block;padding:3px 8px;border-radius:30px;background:var(--mint);font-size:.75rem;font-weight:650}.alert{background:var(--gold)}.amount{font-weight:680;margin:9px 0 4px}.card details{border-top:1px solid var(--rule);margin-top:11px;padding-top:9px}.card form{display:grid;gap:9px;margin-top:10px}.card a,.method a{font-weight:650}.method{margin-top:24px;border-top:1px solid var(--rule);padding-top:16px}summary{cursor:pointer;font-weight:650}.method p{margin-top:9px}.status{margin-top:10px;color:var(--green)}dialog{width:min(540px,calc(100% - 30px));padding:22px;border:1px solid var(--rule);border-radius:8px;background:var(--white);color:var(--ink)}dialog::backdrop{background:#112d29b0}dialog h2{font-size:2.1rem}dialog p{margin:10px 0}dialog code{overflow-wrap:anywhere}dialog .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}footer{border-top:1px solid var(--rule);padding:18px 0;color:var(--muted);font-size:.88rem}.table-wrap{overflow-x:auto;margin-top:12px}table{width:100%;border-collapse:collapse;background:var(--white)}th,td{padding:10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}td:first-child{min-width:240px}td:nth-child(3){min-width:155px}.table-wrap .card{border:0;padding:0}.table-wrap .card h3{margin:6px 0}.table-wrap .card details{margin-top:5px;padding-top:5px}.chart-row{display:grid;grid-template-columns:minmax(105px,2fr) 3fr auto;gap:8px;align-items:center;margin:7px 0}.chart-row meter{width:100%}.facts{margin:8px 0;padding-left:20px}.empty{grid-column:1/-1;padding:24px 0}
 .research{margin-bottom:32px;padding:22px;border:1px solid var(--rule);background:var(--white);border-radius:6px}.research h2{font-size:clamp(1.8rem,4vw,2.7rem)}.research-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.research-actions input{flex:1 1 200px}.research button[aria-pressed=true]{background:var(--green);color:var(--white)}.research details,.research #research-status{margin-top:10px}.research li{margin-bottom:9px;overflow-wrap:anywhere}.research label{margin-top:10px}
+.geographic{margin-top:30px}.geographic>p{margin-top:8px}.geo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.geographic #geo-flag{font-size:2.2rem;line-height:1.1}.geographic .research-actions{align-items:center}.evidence-row{padding:8px 0;border-top:1px solid var(--rule);overflow-wrap:anywhere}.evidence-row button{margin-top:6px}@media(max-width:680px){.geo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.wrap{width:calc(100% - 28px)}.hero{grid-template-columns:1fr;padding:40px 0;gap:22px}.cards{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters label:first-child{grid-column:1/-1}.metric{padding:12px 8px}.metric span{font-size:.76rem}nav>a{font-size:.88rem}}
 </style>
 </head>
@@ -42,7 +43,31 @@
 <p class="status" id="status" role="status"></p><div class="table-wrap"><table aria-labelledby="expedientes"><thead><tr><th scope="col">Expediente</th><th scope="col">País y organismo</th><th scope="col">Montos</th><th scope="col">Revisión</th></tr></thead><tbody id="cards"></tbody></table></div>
 <details class="method"><summary>Gráficos de los expedientes visibles</summary><label>Vista<select id="chart-mode"><option value="pais">Registros por país</option><option value="review">Estado de revisión</option><option value="variacion">Variación por organismo y año</option><option value="montos">Montos iniciales y finales</option></select></label><div id="chart"></div><button class="secondary" id="download-chart">Descargar gráfico (SVG)</button></details>
 <details class="method" id="metodo"><summary>Cómo funciona</summary><p><strong>Variación porcentual</strong> = (monto final − monto inicial) ÷ monto inicial × 100. Esta versión marca los aumentos de al menos 20 %. Cada comparación usa la moneda del expediente.</p><p>La alerta señala un expediente para revisión. Consulta el contrato, sus modificaciones y las fuentes antes de sacar una conclusión.</p><p>Los registros y notas se guardan en este navegador. Borrar sus datos o cambiar de dispositivo puede hacer que se pierdan. <a href="https://github.com/wexicos-create/SIFIA-JOCERVANTES/issues">Reportar un error del sitio</a>. Evita incluir notas privadas en reportes públicos.</p></details>
-<p class="hint method">La descarga incluye las fuentes y los filtros de la vista. Verifica los datos en la fuente original.</p><button class="secondary" id="export">↓ Descargar datos visibles (CSV)</button></main>
+<p class="hint method">La descarga incluye las fuentes y los filtros de la vista. Verifica los datos en la fuente original.</p><button class="secondary" id="export">↓ Descargar datos visibles (CSV)</button><section class="research geographic" aria-labelledby="geo-title">
+  <h2 id="geo-title">Noticias por territorio <span aria-hidden="true">🌐</span></h2>
+  <p>Consulta la cobertura disponible y conserva documentos públicos para revisar la evidencia.</p>
+  <form id="geo-form">
+    <div class="geo-grid">
+      <label>Continente<select id="geo-continent"></select></label>
+      <label>País<select id="geo-country" required></select></label>
+      <label>Estado o provincia<input id="geo-region" maxlength="80" placeholder="San Luis Potosí"></label>
+      <label>Ciudad o municipio<input id="geo-city" maxlength="80" placeholder="Soledad de Graciano Sánchez"></label>
+    </div>
+    <div class="research-actions"><span id="geo-flag" aria-hidden="true"></span><button class="primary">Buscar noticias</button></div>
+  </form>
+  <p class="hint">La ubicación es un criterio de búsqueda por nombre. Confirma en la fuente dónde ocurrieron los hechos.</p>
+  <p id="geo-status" role="status"></p>
+  <details id="geo-process"><summary>Cómo revisa las fuentes CognitIA</summary><ol id="geo-stages"></ol></details>
+  <div id="geo-results"></div>
+  <details id="evidence-panel">
+    <summary>Archivo histórico de evidencia <span aria-hidden="true">🗂️</span></summary>
+    <p>Guarda el HTML original de los portales habilitados, con URL, hora UTC y huella SHA-256. Las capturas se guardan en este navegador y pueden descargarse para conservarlas junto al archivo de <a href="https://intautor.vercel.app/">IntAutor</a>.</p>
+    <form id="archive-form"><div class="research-actions"><input id="archive-url" type="url" required aria-label="URL directa del documento oficial" placeholder="https://www.asf.gob.mx/…"><button class="secondary">Capturar HTML oficial</button></div></form>
+    <p id="archive-status" role="status"></p>
+    <div id="archive-list"></div>
+  </details>
+</section>
+</main>
 <footer><div class="wrap">AntiCorrupcion Ciudadana · Observatorio internacional de contrataciones públicas</div></footer>
 <dialog id="import-dialog" aria-labelledby="import-title"><h2 id="import-title">Importar contratos</h2><p>Usa un archivo CSV UTF-8 separado por comas. Los campos obligatorios son país, organismo y descripción. Añade un enlace a la fuente cuando esté disponible.</p><p><code>pais,organismo,contrato,moneda,monto_inicial,monto_final,fuente</code></p><form id="import-form"><label>Archivo CSV<input id="csv-file" required type="file" accept=".csv,text/csv"></label><p class="status" role="alert" id="import-error"></p><div id="preview"></div><div class="actions"><button class="primary" id="confirm-import">Previsualizar</button><button type="button" class="secondary" id="close-import">Cancelar</button><a class="secondary" id="template" download="plantilla-contratos.csv">Descargar plantilla</a></div></form></dialog>
 <dialog id="manual-dialog"><h2>Añadir contrato</h2><form id="manual-form"><div id="manual-fields"></div><p id="manual-error" role="alert"></p><div class="actions"><button class="primary">Guardar contrato</button><button type="button" class="secondary" id="close-manual">Cancelar</button></div></form></dialog><noscript>Activa JavaScript para usar el observatorio.</noscript>
@@ -469,6 +494,148 @@ el('research-form').addEventListener('submit',async event=>{
   } catch(error) {
     if(request===requestCounter) el('research-status').textContent=error instanceof SyntaxError?'La búsqueda no está disponible en este momento.':error.message;
   }
+});
+const territories={
+  'América':['MX','US','CA','GT','HN','SV','NI','CR','PA','DO','CU','HT','JM','CO','VE','EC','PE','BO','BR','CL','AR','PY','UY','GY','SR','BZ','TT','BS','BB','AG','DM','GD','KN','LC','VC'],
+  'Europa':['ES','PT','FR','GB','IE','DE','IT','BE','NL','LU','CH','AT','NO','SE','FI','DK','IS','PL','CZ','SK','HU','GR','RO','BG','HR','SI','BA','RS','ME','AL','MK','EE','LV','LT','UA','MD','BY','RU','MT','CY','AD','SM','MC','LI','VA','XK'],
+  'África':['ZA','NG','KE','EG','MA','DZ','TN','ET','GH','SN','UG','TZ','AO','BJ','BW','BF','BI','CM','CV','CF','TD','KM','CG','CD','DJ','GQ','ER','SZ','GA','GM','GN','GW','CI','LS','LR','LY','MG','MW','ML','MR','MU','MZ','NA','NE','RW','ST','SC','SL','SO','SS','SD','TG','ZM','ZW'],
+  'Asia':['CN','JP','IN','KR','KP','TH','VN','ID','PH','SG','MY','BN','KH','LA','MM','TL','PK','BD','LK','NP','BT','MV','AF','KZ','KG','TJ','TM','UZ','MN','AE','SA','QA','OM','BH','KW','IQ','IR','IL','JO','LB','SY','TR','YE','PS','GE','AM','AZ','TW'],
+  'Oceanía':['AU','NZ','FJ','PG','WS','TO','VU','SB','KI','NR','TV','PW','FM','MH']
+};
+const nationNames=new Intl.DisplayNames(['es-MX'],{type:'region'});
+const continentPick=el('geo-continent'), nationPick=el('geo-country');
+for(const continent of Object.keys(territories)) continentPick.add(new Option(continent,continent));
+function regionalFlag(){
+  const code=nationPick.value;
+  el('geo-flag').textContent=code ? [...code].map(letter=>String.fromCodePoint(127397+letter.charCodeAt(0))).join('') : '🌐';
+  el('geo-flag').animate([{opacity:.45,transform:'translateY(2px)'},{opacity:1,transform:'translateY(0)'}],{duration:matchMedia('(prefers-reduced-motion: reduce)').matches?0:220});
+}
+function setNations(){
+  nationPick.replaceChildren(new Option('Selecciona un país',''));
+  const choices=territories[continentPick.value].map(code=>[nationNames.of(code),code]).sort((a,b)=>a[0].localeCompare(b[0],'es'));
+  for(const [label,value] of choices) nationPick.add(new Option(label,value));
+  el('geo-region').value='';el('geo-city').value='';
+  regionalFlag();
+}
+continentPick.value='América';
+setNations();
+nationPick.value='MX';
+regionalFlag();
+continentPick.addEventListener('change',setNations);
+nationPick.addEventListener('change',regionalFlag);
+
+function archiveDatabase(){
+  return new Promise((resolve,reject)=>{
+    const request=indexedDB.open('anticorrupcion-evidencia',1);
+    request.onupgradeneeded=()=>request.result.createObjectStore('capturas',{keyPath:'id'});
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error);
+  });
+}
+async function archiveAction(mode,operation){
+  const database=await archiveDatabase();
+  try {
+    return await new Promise((resolve,reject)=>{
+      const transaction=database.transaction('capturas',mode);
+      const request=operation(transaction.objectStore('capturas'));
+      transaction.oncomplete=()=>resolve(request.result);
+      transaction.onerror=()=>reject(transaction.error);
+      transaction.onabort=()=>reject(transaction.error);
+    });
+  } finally {database.close();}
+}
+const archiveHosts=new Set(['www.asf.gob.mx','datos.asf.gob.mx','www.gob.mx','www.dof.gob.mx','www.slp.gob.mx','slp.gob.mx','www.justice.gov','www.oecd.org','www.worldbank.org','www.eca.europa.eu']);
+async function captureEvidence(url){
+  const response=await fetch('/api/archivo?'+new URLSearchParams({url}));
+  const data=await response.json();
+  if(!response.ok) throw new Error(data.error);
+  await archiveAction('readwrite',store=>store.put({...data,id:data.url+'|'+data.capturedAt+'|'+data.sha256}));
+  return data;
+}
+async function showArchive(){
+  const captures=await archiveAction('readonly',store=>store.getAll());
+  const region=el('archive-list');
+  region.replaceChildren();
+  for(const snapshot of captures.sort((a,b)=>b.capturedAt.localeCompare(a.capturedAt))){
+    const item=node('article','','evidence-row'), link=node('a',snapshot.url);
+    link.href=snapshot.url;link.target='_blank';link.rel='noopener noreferrer';
+    const exportButton=node('button','Descargar evidencia (JSON)','secondary');
+    exportButton.addEventListener('click',()=>{
+      const {id,...evidence}=snapshot;
+      download('evidencia-'+snapshot.sha256.slice(0,12)+'.json',JSON.stringify(evidence,null,2),'application/json');
+    });
+    item.append(link,node('p',snapshot.capturedAt+' · '+snapshot.size+' bytes · SHA-256 '+snapshot.sha256,'hint'),exportButton);
+    region.append(item);
+  }
+  if(!captures.length) region.append(node('p','Todavía no hay capturas locales.','hint'));
+}
+el('evidence-panel').addEventListener('toggle',()=>{
+  if(el('evidence-panel').open) showArchive().catch(()=>{el('archive-status').textContent='El navegador no pudo abrir el archivo local.';});
+});
+el('archive-form').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const status=el('archive-status'), button=event.submitter;
+  button.disabled=true;
+  status.textContent='Capturando el documento oficial…';
+  try {
+    await captureEvidence(el('archive-url').value);
+    await showArchive();
+    status.textContent='Captura guardada en este navegador.';
+  } catch(error){status.textContent=error instanceof SyntaxError?'La captura no está disponible en este momento.':error.message;}
+  finally{button.disabled=false;}
+});
+
+const stageLabels=['Ubicación','Medios','Declaraciones','Cargos y nombres públicos','Archivo','Integridad','Hipótesis'];
+function showStages(facts){
+  el('geo-stages').replaceChildren(...stageLabels.map((label,index)=>node('li',label+' · '+facts[index])));
+}
+showStages(stageLabels.map(()=> 'Esperando una consulta.'));
+const positionMention=/\b(presidente|presidenta|gobernador|gobernadora|alcalde|alcaldesa|ministro|ministra|secretario|secretaria|senador|senadora|diputado|diputada|fiscal|mayor|governor|minister)\b/iu;
+const statementMention=/\b(declara|declaró|informa|informó|anuncia|anunció|afirma|afirmó|dijo|comunicado|statement|said)\b/iu;
+el('geo-form').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const button=event.submitter, status=el('geo-status'), output=el('geo-results');
+  const location={pais:nationNames.of(nationPick.value),region:el('geo-region').value.trim(),ciudad:el('geo-city').value.trim()};
+  const place=[location.ciudad,location.region,location.pais,continentPick.value].filter(Boolean).join(' · ');
+  button.disabled=true;
+  output.replaceChildren();
+  showStages([place,...stageLabels.slice(1).map(()=> 'En espera de fuentes.')]);
+  status.textContent='Buscando noticias y referencias institucionales…';
+  try {
+    const response=await fetch('/api/investigar?'+new URLSearchParams({modo:'noticias',...location}));
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.error);
+    const sources=[...new Map(data.sources.map(source=>[source.url,source])).values()];
+    const declared=sources.filter(source=>statementMention.test(source.title));
+    const people=sources.filter(source=>positionMention.test(source.title));
+    const primary=sources.filter(source=>archiveHosts.has(new URL(source.url).hostname)).slice(0,2);
+    const facts=[place,new Set(sources.map(source=>source.host)).size+' medios o portales',
+      declared.length+' titulares con posibles declaraciones por contrastar',
+      people.length+' titulares mencionan cargos públicos. La identidad requiere verificación.',
+      primary.length ? 'Capturando HTML oficial en paralelo…' : 'Sin enlaces oficiales directos aptos para captura automática.',
+      'La huella SHA-256 identifica los bytes conservados.',
+      'Comprueba qué autoridad realizó la observación, su jurisdicción y si sigue pendiente, fue aclarada o terminó en resolución.'];
+    showStages(facts);
+    status.textContent=sources.length+' referencias · '+data.provider+' · consulta del '+data.searchedAt.slice(0,10);
+    const list=node('ul');
+    for(const source of sources) {
+      const item=node('li'), link=node('a',source.title);
+      link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';
+      item.append(link,node('p',[source.host,source.date||'Sin fecha en el índice',source.official?'Referencia institucional':'Cobertura por contrastar'].join(' · '),'hint'));
+      list.append(item);
+    }
+    if(sources.length) output.append(list);
+    else output.append(node('p','Prueba con un ámbito más amplio, por ejemplo, solo el país.'));
+    if(primary.length){
+      const captures=await Promise.allSettled(primary.map(source=>captureEvidence(source.url)));
+      const saved=captures.filter(result=>result.status==='fulfilled').length;
+      facts[4]=saved+' de '+primary.length+' capturas oficiales guardadas en este navegador.';
+      facts[5]=saved?'Las capturas guardadas incluyen fecha UTC, URL y SHA-256.':'Los portales no entregaron HTML directo dentro de los límites de captura.';
+      showStages(facts);
+      if(el('evidence-panel').open) await showArchive();
+    }
+  } catch(error){status.textContent=error instanceof SyntaxError?'La búsqueda no está disponible en este momento.':error.message;}
+  finally{button.disabled=false;}
 });
 </script>
 </body>
