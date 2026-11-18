@@ -3,9 +3,18 @@ const official = host => /(?:^|\.)(?:gob\.mx|asf\.gob\.mx|justice\.gov|worldbank
 const scrub = value => String(value || '').normalize('NFC').replace(/[^\p{L}\p{N} .'-]/gu,' ').replace(/\s+/g,' ').trim();
 
 const unescapeXml = value => value.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&(amp|lt|gt|quot|apos|#39);/g,(_,key)=>({amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",'#39':"'"})[key]);
-async function rssFallback(subject,mode) {
+const matterTerms=new Map(Object.entries({compras:'(contrato OR licitación OR procurement)',obras:'(obra OR infraestructura OR construcción)',policia:'(policía OR seguridad OR police)',justicia:'(justicia OR fiscalía OR tribunal)',gobierno:'(gobierno OR presupuesto OR gasto)',salud:'(salud OR hospital OR medicamentos)',educacion:'(educación OR escuela OR universidad)'}));
+const signalTerms=new Map(Object.entries({auditoria:'(auditoría OR observación OR fiscalización)',denuncia:'(denuncia OR reporte OR investigación)',rumor:'(rumor OR desmentido OR verificación OR denuncia)',resolucion:'(sentencia OR resolución OR sanción)'}));
+const stopwords=new Set('que quiero busquemos buscar indícanos para sobre una uno del las los con por cómo entre como qué quien cual cuál este esta donde dónde informa información caso'.split(' '));
+function topicTerms(topic,wide){
+  if(!topic) return [];
+  if(!wide) return [topic];
+  const words=[...new Set(topic.split(/ +/).filter(word=>word.length>=3&&!stopwords.has(word.toLowerCase())))];
+  return words.length ? words.slice(0,4) : [topic];
+}
+async function rssFallback(subject,terms) {
   const url=new URL('https://news.google.com/rss/search');
-  url.search=new URLSearchParams({q:(subject?subject+' ':'')+(mode==='servidor'?'(funcionario OR nombramiento OR auditoría)':'(corrupción OR auditoría OR desvío)')+' when:90d',hl:'es-419',gl:'MX',ceid:'MX:es-419'});
+  url.search=new URLSearchParams({q:[subject,terms,'when:90d'].filter(Boolean).join(' '),hl:'es-419',gl:'MX',ceid:'MX:es-419'});
   const response=await fetch(url,{signal:AbortSignal.timeout(5500)});
   if(!response.ok) throw new Error('RSS unavailable');
   const xml=await response.text();
@@ -24,18 +33,20 @@ async function rssFallback(subject,mode) {
 module.exports = async (req,res) => {
   res.setHeader('Cache-Control','no-store');
   if (req.method !== 'GET') return res.status(405).json({error:'Método inválido.'});
-  const {modo,tema,pais,region,ciudad}=req.query;
+  const {modo,tema,pais,region,ciudad,materia,senal,amplia}=req.query;
   const topic=scrub(tema);
-  if (!modes.has(modo) || topic.length>90 || (modo!=='noticias' && topic.length<3)) {
+  if (!modes.has(modo) || topic.length>180 || (modo!=='noticias' && topic.length<3)) {
     return res.status(400).json({error:'Indica un lugar, tema o nombre público válido.'});
   }
   // Search a fixed news index. The request never retrieves user-supplied URLs.
   const places=[pais,region,ciudad].map(scrub).filter(Boolean);
   if(places.some(value=>value.length>80)) return res.status(400).json({error:'Usa nombres de lugares de hasta 80 caracteres.'});
-  const subject=[...places,topic].filter(Boolean).map(value=>'"'+value+'"').join(' ');
-  const terms=modo==='servidor'?'(funcionario OR nombramiento OR auditoría OR official)':'(corrupción OR desvío OR auditoría OR corruption OR bribery)';
+  const subject=[...places,...topicTerms(topic,amplia==='1')].map(value=>'"'+value+'"').join(' ');
+  const base=modo==='servidor'?'(funcionario OR nombramiento OR auditoría OR official)':'(corrupción OR desvío OR auditoría OR corruption OR bribery)';
+  const terms=[base,matterTerms.get(materia),signalTerms.get(senal)].filter(Boolean).join(' ');
   const url=new URL('https://api.gdeltproject.org/api/v2/doc/doc');
   for(const [key,value] of Object.entries({query:[subject,terms].filter(Boolean).join(' '),mode:'ArtList',format:'json',sort:'DateDesc',maxrecords:'25',timespan:'3months'})) url.searchParams.set(key,value);
+  let firstReturnedEmpty=false;
   try {
     const upstream=await fetch(url,{signal:AbortSignal.timeout(7500),headers:{Accept:'application/json'}});
     if(!upstream.ok) throw new Error('source unavailable');
@@ -50,13 +61,14 @@ module.exports = async (req,res) => {
       const date=/^\d{8}T\d{6}Z$/.test(item.seendate) ? item.seendate.replace(/^(\d{4})(\d{2})(\d{2}).*/,'$1-$2-$3') : null;
       results.set(link.href,{title:item.title.trim().slice(0,500),url:link.href,host:link.hostname,date,official:official(link.hostname)});
     }
-    return res.status(200).json({sources:[...results.values()].sort((a,b)=>Number(b.official)-Number(a.official)),searchedAt:new Date().toISOString(),provider:'GDELT'});
+    firstReturnedEmpty=results.size===0;
+    if(!firstReturnedEmpty) return res.status(200).json({sources:[...results.values()].sort((a,b)=>Number(b.official)-Number(a.official)),searchedAt:new Date().toISOString(),provider:'GDELT'});
+  } catch { /* Try the secondary news index. */ }
+  try {
+    const sources=await rssFallback(subject,terms);
+    return res.status(200).json({sources,searchedAt:new Date().toISOString(),provider:firstReturnedEmpty?'GDELT y Google News':'Google News'});
   } catch {
-    try {
-      const sources=await rssFallback(subject,modo);
-      return res.status(200).json({sources,searchedAt:new Date().toISOString(),provider:'Google News'});
-    } catch {
-      return res.status(503).json({error:'Los índices de noticias no respondieron. Puedes consultar los registros oficiales y volver a intentar.'});
-    }
+    if(firstReturnedEmpty) return res.status(200).json({sources:[],searchedAt:new Date().toISOString(),provider:'GDELT',partial:true});
+    return res.status(503).json({error:'Los índices de noticias no respondieron. Puedes consultar los registros oficiales y volver a intentar.'});
   }
 };

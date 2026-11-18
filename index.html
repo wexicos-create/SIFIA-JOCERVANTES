@@ -20,6 +20,18 @@
 <div class="hero"><div><h1>AntiCorrupcion <span>Ciudadana</span></h1><p class="tagline">Sigue el dinero público y detecta irregularidades en cualquier país</p><p class="author">Autor: Josué Israel Cervantes Alvarado</p></div><aside>Explora contratos públicos, compara sus montos y revisa las fuentes. Las alertas señalan expedientes para investigar.</aside></div>
 </div></header>
 <main class="wrap">
+<section class="research" aria-labelledby="meter-title">
+<h2 id="meter-title">Corruptómetro</h2>
+<p>Percepción de corrupción del sector público · Índice 2025 de Transparency International</p>
+<p class="hint">Escala de 0 a 100. Un puntaje más bajo indica mayor percepción de corrupción. Los promedios continentales dan el mismo peso a cada país o territorio incluido. La cifra al lado de cada barra indica cuántos se evaluaron.</p>
+<div id="cpi-continents"></div>
+<label>Consulta un país o territorio<select id="cpi-country"></select></label>
+<p id="cpi-score" role="status"></p>
+<details><summary>Los 20 puntajes más bajos del índice</summary><ol id="cpi-low"></ol></details>
+<p class="hint">El índice evalúa países y territorios. Para estados, policías u otros servidores públicos, consulta expedientes y fuentes individuales.</p>
+<p><a href="https://www.transparency.org/en/cpi/2025">Ver datos y metodología de Transparency International</a></p>
+</section>
+
 <section class="research" aria-labelledby="research-title">
 <h2 id="research-title">Investiga con CognitIA</h2>
 <div class="research-actions" role="group" aria-label="Tipo de investigación">
@@ -53,12 +65,19 @@
       <label>Estado o provincia<input id="geo-region" maxlength="80" placeholder="San Luis Potosí"></label>
       <label>Ciudad o municipio<input id="geo-city" maxlength="80" placeholder="Soledad de Graciano Sánchez"></label>
     </div>
+    <div class="geo-grid">
+      <label>Materia<select id="geo-matter"><option value="">Todas</option><option value="compras">Compras y contrataciones</option><option value="obras">Obras y servicios públicos</option><option value="policia">Policía y seguridad</option><option value="justicia">Justicia</option><option value="gobierno">Gobierno y gasto público</option><option value="salud">Salud</option><option value="educacion">Educación</option></select></label>
+      <label>Tipo de señal<select id="geo-signal"><option value="">Todas</option><option value="auditoria">Auditoría u observación</option><option value="denuncia">Denuncia o reporte</option><option value="rumor">Rumor por verificar</option><option value="resolucion">Resolución o sentencia</option></select></label>
+    </div>
+    <label>Indícanos qué es lo que quieres que busquemos<textarea id="geo-question" maxlength="180" rows="2" placeholder="Ejemplo: sobrecostos en una obra de agua potable"></textarea></label>
     <div class="research-actions"><span id="geo-flag" aria-hidden="true"></span><button class="primary">Buscar noticias</button></div>
   </form>
   <p class="hint">La ubicación es un criterio de búsqueda por nombre. Confirma en la fuente dónde ocurrieron los hechos.</p>
   <p id="geo-status" role="status"></p>
   <details id="geo-process"><summary>Cómo revisa las fuentes CognitIA</summary><ol id="geo-stages"></ol></details>
-  <div id="geo-results"></div>
+  <div id="geo-summary"></div><div id="geo-results"></div>
+  <div class="research-actions"><button id="geo-download" class="primary" type="button" disabled>↓ Descargar información (CSV)</button><button id="geo-copy" class="secondary" type="button" disabled>📋 Copiar información</button></div>
+  <p id="geo-export-status" role="status"></p>
   <details id="evidence-panel">
     <summary>Archivo histórico de evidencia <span aria-hidden="true">🗂️</span></summary>
     <p>Guarda el HTML original de los portales habilitados, con URL, hora UTC y huella SHA-256. Las capturas se guardan en este navegador y pueden descargarse para conservarlas junto al archivo de <a href="https://intautor.vercel.app/">IntAutor</a>.</p>
@@ -66,6 +85,19 @@
     <p id="archive-status" role="status"></p>
     <div id="archive-list"></div>
   </details>
+</section>
+<section class="research" aria-labelledby="contact-title">
+<h2 id="contact-title">Contáctanos</h2>
+<details><summary>💬 Chat de ayuda</summary><p>Elige el tipo de ayuda que necesitas.</p>
+<div class="research-actions"><button class="secondary" type="button" data-help="buscar">Cómo buscar</button><button class="secondary" type="button" data-help="error">Corregir un resultado</button><button class="secondary" type="button" data-help="contacto">Contactar al equipo</button></div>
+<p id="help-answer" role="status"></p></details>
+<form id="contact-form">
+<label>Asunto<input id="contact-subject" required maxlength="100"></label>
+<label>Mensaje<textarea id="contact-message" required maxlength="2000" rows="4"></textarea></label>
+<p class="hint">El formulario prepara un reporte público en GitHub para que lo revises antes de publicarlo. Evita incluir mensajes privados o datos personales.</p>
+<button class="primary">Preparar reporte</button>
+</form>
+<p id="contact-status" role="status"></p><a id="contact-link" target="_blank" rel="noopener noreferrer" hidden>Revisar reporte en GitHub</a>
 </section>
 </main>
 <footer><div class="wrap">AntiCorrupcion Ciudadana · Observatorio internacional de contrataciones públicas</div></footer>
@@ -592,6 +624,38 @@ function showStages(facts){
 showStages(stageLabels.map(()=> 'Esperando una consulta.'));
 const positionMention=/\b(presidente|presidenta|gobernador|gobernadora|alcalde|alcaldesa|ministro|ministra|secretario|secretaria|senador|senadora|diputado|diputada|fiscal|mayor|governor|minister)\b/iu;
 const statementMention=/\b(declara|declaró|informa|informó|anuncia|anunció|afirma|afirmó|dijo|comunicado|statement|said)\b/iu;
+let geoReport=null;
+function setReport(report) {
+  geoReport=report;
+  el('geo-download').disabled=!report;
+  el('geo-copy').disabled=!report;
+  el('geo-export-status').textContent='';
+}
+el('geo-download').addEventListener('click',()=>{
+  if(!geoReport) return;
+  const {place,question,matter,signal,scope,provider,date,sources}=geoReport;
+  const header=['Ubicación solicitada','Pregunta','Materia','Tipo de señal','Alcance consultado','Índice','Fecha de consulta','Referencia','Medio','Fecha del índice','Estado de evidencia','URL'];
+  const rows=(sources.length?sources:[{}]).map(source=>[place,question,matter,signal,scope,provider,date,source.title,source.host,source.date,source.title?'Referencia por contrastar':'Sin referencias en los índices consultados',source.url]);
+  download('investigacion-territorial.csv','\uFEFF'+[header,...rows].map(row=>row.map(csvField).join(',')).join('\r\n'),'text/csv;charset=utf-8');
+});
+el('geo-copy').addEventListener('click',async()=>{
+  if(!geoReport) return;
+  const {place,question,matter,signal,scope,provider,date,sources}=geoReport;
+  const lines=[place,question,matter,signal,scope,provider+' · '+date,sources.length?sources.length+' referencias por contrastar':'Sin referencias en los índices consultados.',...sources.map(source=>[source.title,source.host,source.date,source.url].filter(Boolean).join(' · '))].filter(Boolean);
+  try { await navigator.clipboard.writeText(lines.join('\n')); el('geo-export-status').textContent='Información copiada al portapapeles.'; }
+  catch { el('geo-export-status').textContent='El navegador no permitió copiar. Puedes descargar el CSV.'; }
+});
+function geographicSummary(sources) {
+  const region=el('geo-summary');
+  region.replaceChildren(node('h3','Resultados por tipo de fuente'));
+  const official=sources.filter(source=>source.official).length;
+  for(const [label,count] of [['Portales institucionales',official],['Medios y otras referencias',sources.length-official]]) {
+    const bar=node('meter');bar.max=Math.max(1,sources.length);bar.value=count;bar.setAttribute('aria-label',label+' '+count);
+    const row=node('div','','chart-row');row.append(node('span',label),bar,node('span',String(count)));region.append(row);
+  }
+  region.append(node('p','Cada referencia es una pista para contrastar. Una denuncia, un rumor y una resolución tienen distinto peso.','hint'));
+}
+
 el('geo-form').addEventListener('submit',async event=>{
   event.preventDefault();
   const button=event.submitter, status=el('geo-status'), output=el('geo-results');
@@ -599,12 +663,34 @@ el('geo-form').addEventListener('submit',async event=>{
   const place=[location.ciudad,location.region,location.pais,continentPick.value].filter(Boolean).join(' · ');
   button.disabled=true;
   output.replaceChildren();
+  el('geo-summary').replaceChildren();
+  setReport(null);
   showStages([place,...stageLabels.slice(1).map(()=> 'En espera de fuentes.')]);
   status.textContent='Buscando noticias y referencias institucionales…';
   try {
-    const response=await fetch('/api/investigar?'+new URLSearchParams({modo:'noticias',...location}));
-    const data=await response.json();
-    if(!response.ok) throw new Error(data.error);
+    const question=el('geo-question').value.trim();
+    const matter=el('geo-matter'), signal=el('geo-signal');
+    const criteria={materia:matter.value,senal:signal.value,tema:question};
+    const labels={matter:matter.selectedOptions[0].textContent,signal:signal.selectedOptions[0].textContent};
+    const attempts=[{scope:'Ámbito solicitado',query:location,wide:false}];
+    if(question) attempts.push({scope:'Ámbito solicitado, términos más amplios del caso',query:location,wide:true});
+    if(location.ciudad || location.region) attempts.push({scope:'Ámbito ampliado · '+(location.region&&location.ciudad?location.region:location.pais),query:{...location,ciudad:'',region:location.ciudad?location.region:''},wide:true});
+    if(location.region&&location.ciudad) attempts.push({scope:'Ámbito ampliado · '+location.pais,query:{pais:location.pais},wide:true});
+    let data=null, scope='', failed=0;
+    const providers=new Set();
+    for(const attempt of attempts) {
+      status.textContent='Consultando · '+attempt.scope+'…';
+      try {
+        const response=await fetch('/api/investigar?'+new URLSearchParams({modo:'noticias',...attempt.query,...criteria,amplia:attempt.wide?'1':'0'}));
+        const result=await response.json();
+        if(!response.ok) { failed++;continue; }
+        data=result; scope=attempt.scope;providers.add(result.provider);
+        if(result.partial) failed++;
+        if(data.sources.length) break;
+      } catch { failed++; }
+    }
+    if(!data) throw new Error('Los índices no respondieron. No se pudo completar la búsqueda.');
+
     const sources=[...new Map(data.sources.map(source=>[source.url,source])).values()];
     const declared=sources.filter(source=>statementMention.test(source.title));
     const people=sources.filter(source=>positionMention.test(source.title));
@@ -616,7 +702,10 @@ el('geo-form').addEventListener('submit',async event=>{
       'La huella SHA-256 identifica los bytes conservados.',
       'Comprueba qué autoridad realizó la observación, su jurisdicción y si sigue pendiente, fue aclarada o terminó en resolución.'];
     showStages(facts);
-    status.textContent=sources.length+' referencias · '+data.provider+' · consulta del '+data.searchedAt.slice(0,10);
+    status.textContent=sources.length ? sources.length+' referencias · '+scope+' · '+data.provider+' · '+data.searchedAt.slice(0,10) :
+      'No encontramos referencias en las consultas que respondieron. '+(failed?'Una parte de la búsqueda quedó incompleta por fallos de los índices.':'Se probaron las variantes disponibles para esta ubicación.');
+    geographicSummary(sources);
+    setReport({place,question,...labels,scope,provider:[...providers].join(', '),date:data.searchedAt.slice(0,10),sources});
     const list=node('ul');
     for(const source of sources) {
       const item=node('li'), link=node('a',source.title);
@@ -625,7 +714,7 @@ el('geo-form').addEventListener('submit',async event=>{
       list.append(item);
     }
     if(sources.length) output.append(list);
-    else output.append(node('p','Prueba con un ámbito más amplio, por ejemplo, solo el país.'));
+    else output.append(node('p','Puedes probar otro periodo en un registro oficial o cambiar la materia.'));
     if(primary.length){
       const captures=await Promise.allSettled(primary.map(source=>captureEvidence(source.url)));
       const saved=captures.filter(result=>result.status==='fulfilled').length;
@@ -636,6 +725,49 @@ el('geo-form').addEventListener('submit',async event=>{
     }
   } catch(error){status.textContent=error instanceof SyntaxError?'La búsqueda no está disponible en este momento.':error.message;}
   finally{button.disabled=false;}
+});
+async function showCpi(){
+  const response=await fetch('/cpi-2025.json');
+  if(!response.ok) throw Error('CPI unavailable');
+  const rows=await response.json();
+  if(!Array.isArray(rows)||rows.length!==182) throw Error('CPI incomplete');
+  const country=el('cpi-country');
+  const formatter=new Intl.NumberFormat('es-MX',{maximumFractionDigits:1});
+  for(const continent of Object.keys(territories)){
+    const group=rows.filter(row=>row.continent===continent);
+    const mean=group.reduce((sum,row)=>sum+row.score,0)/group.length;
+    const bar=node('meter');bar.max=100;bar.value=mean;
+    bar.setAttribute('aria-label',continent+' '+formatter.format(mean)+' de 100');
+    const row=node('div','','chart-row');row.append(node('span',continent),bar,node('span',formatter.format(mean)+' / 100 · '+group.length));
+    el('cpi-continents').append(row);
+  }
+  for(const row of [...rows].sort((a,b)=>a.name.localeCompare(b.name,'es'))) country.add(new Option(row.name,row.code));
+  const score=()=>{
+    const row=rows.find(item=>item.code===country.value);
+    el('cpi-score').textContent=row.name+' · '+row.score+' de 100 · Puesto '+row.rank+' de '+rows.length+' en el CPI 2025.';
+  };
+  country.value='MX';score();country.addEventListener('change',score);
+  for(const row of [...rows].sort((a,b)=>a.score-b.score||a.name.localeCompare(b.name,'es')).slice(0,20)){
+    el('cpi-low').append(node('li',row.name+' · '+row.score+'/100 · Puesto '+row.rank));
+  }
+}
+showCpi().catch(()=>{el('cpi-score').textContent='El índice no se pudo cargar. Consulta el enlace a la fuente original.';});
+
+const helpAnswers={
+  buscar:'Elige un país, una materia y, si lo tienes, escribe el nombre de la obra, el organismo o el asunto.',
+  error:'Indica qué resultado requiere corrección y añade el enlace público donde puede comprobarse el dato.',
+  contacto:'Usa el formulario para preparar un reporte. Podrás revisarlo antes de publicarlo en GitHub.'
+};
+for(const button of document.querySelectorAll('[data-help]')) button.addEventListener('click',()=>{el('help-answer').textContent=helpAnswers[button.dataset.help];});
+el('contact-form').addEventListener('submit',event=>{
+  event.preventDefault();
+  const subject=el('contact-subject').value.trim();
+  const body=el('contact-message').value.trim();
+  if(!subject||!body){el('contact-status').textContent='Escribe el asunto y el mensaje.';return;}
+  const url=new URL('https://github.com/wexicos-create/SIFIA-JOCERVANTES/issues/new');
+  url.search=new URLSearchParams({title:subject,body});
+  const link=el('contact-link');link.href=url.href;link.hidden=false;
+  el('contact-status').textContent='Reporte preparado. Revisa el texto antes de publicarlo en GitHub.';
 });
 </script>
 </body>
