@@ -30,7 +30,7 @@
 <label id="research-label" for="research-topic"></label>
 <div class="research-actions"><input id="research-topic" maxlength="90" name="tema"><button class="primary">Buscar fuentes</button></div>
 </form>
-<p class="hint">La búsqueda se envía al índice de noticias GDELT. Usa únicamente nombres y asuntos de interés público.</p>
+<p class="hint">La búsqueda se envía a GDELT o Google News. Usa únicamente nombres y asuntos de interés público.</p>
 <p id="research-status" role="status"></p><div id="research-results"></div>
 <details><summary>Consultar registros oficiales</summary><p><a href="https://datos.asf.gob.mx/">Sistema Público de Consulta de Auditorías de la ASF</a> · <a href="https://www.asf.gob.mx/Section/84_Preguntas_Frecuentes">Cómo interpretar las observaciones de la ASF</a></p></details>
 </section>
@@ -465,7 +465,7 @@ el('research-form').addEventListener('submit',async event=>{
       item.append(link,node('p',[source.host,source.official?'Portal institucional':'Referencia periodística por contrastar',source.date?'Detectada por el índice '+source.date:'Fecha de detección no disponible'].join(' · '),'hint'));
       list.append(item);
     }
-    el('research-results').append(node('p','Consulta del '+data.searchedAt.slice(0,10)+' · Cobertura del índice: últimos tres meses. Los títulos se muestran como aparecen en el índice.','hint'),list);
+    el('research-results').append(node('p','Consulta del '+data.searchedAt.slice(0,10)+' · Índice: '+data.provider+' · Cobertura: últimos tres meses. Los títulos se muestran como aparecen en el índice.','hint'),list);
   } catch(error) {
     if(request===requestCounter) el('research-status').textContent=error instanceof SyntaxError?'La búsqueda no está disponible en este momento.':error.message;
   }
