@@ -1,0 +1,1 @@
+{"name":"anticorrupcion-ciudadana","private":true,"dependencies":{"@sparticuz/chromium":"^143.0.0","puppeteer-core":"^24.0.0","sanitize-html":"^2.17.0"}}
