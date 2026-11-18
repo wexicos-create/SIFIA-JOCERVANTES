@@ -4,7 +4,7 @@ const scrub = value => String(value || '').normalize('NFC').replace(/[^\p{L}\p{N
 
 const unescapeXml = value => value.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&(amp|lt|gt|quot|apos|#39);/g,(_,key)=>({amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",'#39':"'"})[key]);
 const matterTerms=new Map(Object.entries({compras:'(contrato OR licitación OR procurement)',obras:'(obra OR infraestructura OR construcción)',policia:'(policía OR seguridad OR police)',justicia:'(justicia OR fiscalía OR tribunal)',gobierno:'(gobierno OR presupuesto OR gasto)',salud:'(salud OR hospital OR medicamentos)',educacion:'(educación OR escuela OR universidad)'}));
-const signalTerms=new Map(Object.entries({auditoria:'(auditoría OR observación OR fiscalización)',denuncia:'(denuncia OR reporte OR investigación)',rumor:'(rumor OR desmentido OR verificación OR denuncia)',resolucion:'(sentencia OR resolución OR sanción)'}));
+const signalTerms=new Map(Object.entries({auditoria:'(auditoría OR observación OR fiscalización)',denuncia:'(denuncia OR reporte OR investigación)',resolucion:'(sentencia OR resolución OR sanción)'}));
 const stopwords=new Set('que quiero busquemos buscar indícanos para sobre una uno del las los con por cómo entre como qué quien cual cuál este esta donde dónde informa información caso'.split(' '));
 function topicTerms(topic,wide){
   if(!topic) return [];
@@ -24,7 +24,7 @@ async function rssFallback(subject,terms) {
     const read=tag=>unescapeXml(entry.match(new RegExp('<'+tag+'(?: [^>]*)?>([\\s\\S]*?)<\/'+tag+'>','i'))?.[1]||'').trim();
     const title=read('title'),url=read('link'),publisher=read('source'),date=new Date(read('pubDate'));
     if(!title || !url.startsWith('https://news.google.com/rss/articles/')) continue;
-    results.push({title:title.slice(0,500),url,host:publisher||'Google News',date:Number.isNaN(date.valueOf())?null:date.toISOString().slice(0,10),official:false});
+    results.push({title:'Publicación registrada en índice',url,host:publisher||'Google News',date:Number.isNaN(date.valueOf())?null:date.toISOString().slice(0,10),official:false});
     if(results.length===25) break;
   }
   return results;
@@ -59,7 +59,7 @@ module.exports = async (req,res) => {
       if(link.protocol!=='https:' || link.username || link.password || typeof item.title!=='string' || !item.title.trim()) continue;
       link.hash='';
       const date=/^\d{8}T\d{6}Z$/.test(item.seendate) ? item.seendate.replace(/^(\d{4})(\d{2})(\d{2}).*/,'$1-$2-$3') : null;
-      results.set(link.href,{title:item.title.trim().slice(0,500),url:link.href,host:link.hostname,date,official:official(link.hostname)});
+      results.set(link.href,{title:official(link.hostname)?'Documento institucional':'Publicación registrada en índice',url:link.href,host:link.hostname,date,official:official(link.hostname)});
     }
     firstReturnedEmpty=results.size===0;
     if(!firstReturnedEmpty) return res.status(200).json({sources:[...results.values()].sort((a,b)=>Number(b.official)-Number(a.official)),searchedAt:new Date().toISOString(),provider:'GDELT'});
