@@ -20,11 +20,10 @@ function cookieMetadata(headers) {
   });
 }
 async function visualCapture(html) {
-  const chromium=require('@sparticuz/chromium');
-  const puppeteer=require('puppeteer-core');
+  const [{default:chromium},{default:puppeteer}]=await Promise.all([import('@sparticuz/chromium'),import('puppeteer-core')]);
   const sanitize=require('sanitize-html');
   const body=sanitize(html,{allowedTags:['main','article','section','header','footer','nav','div','span','h1','h2','h3','h4','h5','p','br','hr','ol','ul','li','blockquote','strong','b','em','i','table','thead','tbody','tr','th','td','caption','dl','dt','dd','pre','code','a'],allowedAttributes:{},nonTextTags:['style','script','textarea','option','template','noscript','head','svg','iframe']});
-  const browser=await puppeteer.launch({args:chromium.args,executablePath:await chromium.executablePath(),headless:true,timeout:10000,defaultViewport:{width:1280,height:860}});
+  const browser=await puppeteer.launch({args:puppeteer.defaultArgs({args:chromium.args,headless:'shell'}),executablePath:await chromium.executablePath(),headless:'shell',timeout:10000,defaultViewport:{width:1280,height:860}});
   try {
     const page=await browser.newPage();
     await page.setJavaScriptEnabled(false);
@@ -78,7 +77,7 @@ module.exports=async (req,res)=>{
     const capturedAt=new Date().toISOString(),sha256=digest(bytes);
     const headers=metadata(response.headers),cookies=cookieMetadata(response.headers);
     const [visual,intautor]=await Promise.all([
-      visualCapture(bytes.toString('utf8')).catch(()=>null),crosscheck(sha256,url.href)
+      visualCapture(bytes.toString('utf8')).catch(error=>{console.warn('visual-capture-failed',error.name,error.code||'runtime');return null;}),crosscheck(sha256,url.href)
     ]);
     const manifest={schema:2,url:url.href,capturedAt,httpStatus:response.status,type,size,sha256,headers,cookies,visualSha256:visual?.sha256??null,intautor};
     return res.status(200).json({...manifest,manifestSha256:digest(JSON.stringify(manifest)),encoding:'base64',html:bytes.toString('base64'),visual});
