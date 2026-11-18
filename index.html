@@ -9,6 +9,7 @@
 :root{color-scheme:light;--paper:#f5f2e9;--ink:#142c29;--muted:#4f625b;--rule:#cdd2c7;--green:#123c34;--mint:#dce9cd;--gold:#f0dc9c;--white:#fffcf5}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.5 system-ui,sans-serif}button,input,select,textarea{font:inherit}button,select{cursor:pointer}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #b35a16;outline-offset:3px}h1,h2,h3,p{margin:0}h1,h2,h3{line-height:1.08}h1,h2{font-family:Georgia,serif;font-weight:normal}
 .wrap{width:min(1120px,calc(100% - 40px));margin:auto}.top{background:var(--green);color:var(--white)}nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid #729087}.brand{font-weight:750;display:flex;align-items:center;gap:10px}.brand span{border:1px solid #a2b5a7;padding:2px 7px;font-size:.8rem}.hero{padding:58px 0 65px;display:grid;grid-template-columns:2fr 1fr;align-items:end;gap:28px}.hero h1{font-size:clamp(2.7rem,7.6vw,6rem);letter-spacing:-.065em}.hero h1 span{display:block;color:#d3e7b1}.tagline{font-size:clamp(1.06rem,2vw,1.35rem);margin:20px 0 9px}.author{color:#d3e7b1;font-size:.9rem}.hero aside{border-left:2px solid #a3bc86;padding:0 0 4px 18px;color:#edf3e7;max-width:350px}main{padding:38px 0 62px}.section-head{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}.section-head h2{font-size:clamp(2rem,4vw,3.15rem);letter-spacing:-.05em}.primary{background:var(--green);color:var(--white);border:1px solid var(--green);padding:9px 15px;border-radius:5px;text-decoration:none;font-weight:650}.secondary{background:transparent;color:var(--green);border:1px solid var(--rule);padding:8px 12px;border-radius:5px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);margin:22px 0;border:1px solid var(--rule);border-radius:6px;background:var(--white)}.metric{padding:15px 18px}.metric+.metric{border-left:1px solid var(--rule)}.metric strong{display:block;font:2rem/1.1 Georgia,serif}.metric span,.hint{color:var(--muted);font-size:.88rem}.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0 14px}label{display:block;font-size:.9rem;font-weight:650}input,select,textarea{width:100%;padding:8px;border:1px solid #98a89a;border-radius:4px;background:var(--white);color:var(--ink)}label>input,label>select,label>textarea{margin-top:4px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}.card{border:1px solid var(--rule);border-radius:6px;background:var(--white);padding:17px;overflow-wrap:anywhere}.card h3{margin:9px 0;font-size:1.16rem}.meta,.card p,.card summary{font-size:.91rem}.pill{display:inline-block;padding:3px 8px;border-radius:30px;background:var(--mint);font-size:.75rem;font-weight:650}.alert{background:var(--gold)}.amount{font-weight:680;margin:9px 0 4px}.card details{border-top:1px solid var(--rule);margin-top:11px;padding-top:9px}.card form{display:grid;gap:9px;margin-top:10px}.card a,.method a{font-weight:650}.method{margin-top:24px;border-top:1px solid var(--rule);padding-top:16px}summary{cursor:pointer;font-weight:650}.method p{margin-top:9px}.status{margin-top:10px;color:var(--green)}dialog{width:min(540px,calc(100% - 30px));padding:22px;border:1px solid var(--rule);border-radius:8px;background:var(--white);color:var(--ink)}dialog::backdrop{background:#112d29b0}dialog h2{font-size:2.1rem}dialog p{margin:10px 0}dialog code{overflow-wrap:anywhere}dialog .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}footer{border-top:1px solid var(--rule);padding:18px 0;color:var(--muted);font-size:.88rem}.table-wrap{overflow-x:auto;margin-top:12px}table{width:100%;border-collapse:collapse;background:var(--white)}th,td{padding:10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}td:first-child{min-width:240px}td:nth-child(3){min-width:155px}.table-wrap .card{border:0;padding:0}.table-wrap .card h3{margin:6px 0}.table-wrap .card details{margin-top:5px;padding-top:5px}.chart-row{display:grid;grid-template-columns:minmax(105px,2fr) 3fr auto;gap:8px;align-items:center;margin:7px 0}.chart-row meter{width:100%}.facts{margin:8px 0;padding-left:20px}.empty{grid-column:1/-1;padding:24px 0}
+.research{margin-bottom:32px;padding:22px;border:1px solid var(--rule);background:var(--white);border-radius:6px}.research h2{font-size:clamp(1.8rem,4vw,2.7rem)}.research-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.research-actions input{flex:1 1 200px}.research button[aria-pressed=true]{background:var(--green);color:var(--white)}.research details,.research #research-status{margin-top:10px}.research li{margin-bottom:9px;overflow-wrap:anywhere}.research label{margin-top:10px}
 @media(max-width:680px){.wrap{width:calc(100% - 28px)}.hero{grid-template-columns:1fr;padding:40px 0;gap:22px}.cards{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters label:first-child{grid-column:1/-1}.metric{padding:12px 8px}.metric span{font-size:.76rem}nav>a{font-size:.88rem}}
 </style>
 </head>
@@ -18,6 +19,21 @@
 <div class="hero"><div><h1>AntiCorrupcion <span>Ciudadana</span></h1><p class="tagline">Sigue el dinero público y detecta irregularidades en cualquier país</p><p class="author">Autor: Josué Israel Cervantes Alvarado</p></div><aside>Explora contratos públicos, compara sus montos y revisa las fuentes. Las alertas señalan expedientes para investigar.</aside></div>
 </div></header>
 <main class="wrap">
+<section class="research" aria-labelledby="research-title">
+<h2 id="research-title">Investiga con CognitIA</h2>
+<div class="research-actions" role="group" aria-label="Tipo de investigación">
+<button class="secondary" type="button" data-mode="servidor" aria-pressed="false">Investigar servidor público</button>
+<button class="secondary" type="button" data-mode="estado" aria-pressed="false">Investigar corrupción en tu estado</button>
+<button class="secondary" type="button" data-mode="noticias" aria-pressed="true">Lo que no te dicen</button>
+</div>
+<form id="research-form">
+<label id="research-label" for="research-topic"></label>
+<div class="research-actions"><input id="research-topic" maxlength="90" name="tema"><button class="primary">Buscar fuentes</button></div>
+</form>
+<p class="hint">La búsqueda se envía al índice de noticias GDELT. Usa únicamente nombres y asuntos de interés público.</p>
+<p id="research-status" role="status"></p><div id="research-results"></div>
+<details><summary>Consultar registros oficiales</summary><p><a href="https://datos.asf.gob.mx/">Sistema Público de Consulta de Auditorías de la ASF</a> · <a href="https://www.asf.gob.mx/Section/84_Preguntas_Frecuentes">Cómo interpretar las observaciones de la ASF</a></p></details>
+</section>
 <div class="section-head"><h2 id="expedientes">Expedientes</h2><div><button class="secondary" id="manual">Añadir contrato</button> <button class="primary" id="open-import">Importar CSV</button></div></div>
 <div class="metrics" aria-label="Resumen de la vista"><div class="metric"><strong id="total">0</strong><span>Expedientes visibles</span></div><div class="metric"><strong id="alerts">0</strong><span>Alertas por monto</span></div><div class="metric"><strong id="reviewed">0</strong><span>Expedientes revisados</span></div></div>
 <p class="hint" id="data-description"></p><p class="hint" id="coverage"></p>
@@ -408,6 +424,52 @@ el('import-form').addEventListener('submit',async event => {
   } finally { button.disabled = false; }
 });
 render();
+const researchModes={
+  servidor:['Nombre público y cargo o institución','Busca menciones sobre el ejercicio del cargo. Verifica el cargo, la localidad y el periodo antes de atribuir información a una persona.'],
+  estado:['Estado y país','Busca auditorías y noticias de esa jurisdicción. Revisa la entidad fiscalizadora, el ejercicio y el estado de la observación.'],
+  noticias:['Tema o lugar (opcional)','Busca cobertura reciente sobre auditorías, desvíos y corrupción. Consulta los documentos citados y verifica qué autoridad publicó cada hallazgo.']
+};
+let researchMode='noticias', requestCounter=0;
+const researchButtons=[...document.querySelectorAll('[data-mode]')];
+function setResearchMode(mode) {
+  requestCounter++;
+  researchMode=mode;
+  el('research-label').textContent=researchModes[mode][0];
+  el('research-topic').required=mode!=='noticias';
+  el('research-topic').value='';
+  el('research-status').textContent=researchModes[mode][1];
+  el('research-results').replaceChildren();
+  for(const button of researchButtons) button.setAttribute('aria-pressed',String(button.dataset.mode===mode));
+}
+for(const button of researchButtons) button.addEventListener('click',()=>setResearchMode(button.dataset.mode));
+setResearchMode('noticias');
+el('research-form').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const request=++requestCounter, mode=researchMode;
+  const tema=el('research-topic').value.trim();
+  el('research-results').replaceChildren();
+  el('research-status').textContent='CognitIA está buscando referencias públicas…';
+  try {
+    const response=await fetch('/api/investigar?'+new URLSearchParams({modo:mode,tema}));
+    const data=await response.json();
+    if(request!==requestCounter) return;
+    if(!response.ok) throw new Error(data.error);
+    const sources=data.sources;
+    const official=sources.filter(source=>source.official).length;
+    el('research-status').textContent=sources.length ? 'CognitIA encontró '+sources.length+' referencias y '+official+' de portales institucionales. Los hechos y montos quedan pendientes de contrastar con el documento original.' : 'El índice no encontró referencias para esa consulta. Prueba con el nombre oficial de la entidad o un término más general.';
+    if(!sources.length) return;
+    const list=node('ol');
+    for(const source of sources) {
+      const item=node('li'), link=node('a',source.title);
+      link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';
+      item.append(link,node('p',[source.host,source.official?'Portal institucional':'Referencia periodística por contrastar',source.date?'Detectada por el índice '+source.date:'Fecha de detección no disponible'].join(' · '),'hint'));
+      list.append(item);
+    }
+    el('research-results').append(node('p','Consulta del '+data.searchedAt.slice(0,10)+' · Cobertura del índice: últimos tres meses. Los títulos se muestran como aparecen en el índice.','hint'),list);
+  } catch(error) {
+    if(request===requestCounter) el('research-status').textContent=error instanceof SyntaxError?'La búsqueda no está disponible en este momento.':error.message;
+  }
+});
 </script>
 </body>
 </html>
