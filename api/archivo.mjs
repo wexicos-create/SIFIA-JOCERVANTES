@@ -1,4 +1,5 @@
-const {createHash}=require('node:crypto');
+import {createHash} from 'node:crypto';
+import sanitize from 'sanitize-html';
 const portals=new Set(['www.asf.gob.mx','datos.asf.gob.mx','www.gob.mx','www.dof.gob.mx','www.slp.gob.mx','slp.gob.mx','www.justice.gov','www.oecd.org','www.worldbank.org','www.eca.europa.eu']);
 const limit=1_000_000;
 
@@ -21,7 +22,6 @@ function cookieMetadata(headers) {
 }
 async function visualCapture(html) {
   const [{default:chromium},{default:puppeteer}]=await Promise.all([import('@sparticuz/chromium'),import('puppeteer-core')]);
-  const sanitize=require('sanitize-html');
   const body=sanitize(html,{allowedTags:['main','article','section','header','footer','nav','div','span','h1','h2','h3','h4','h5','p','br','hr','ol','ul','li','blockquote','strong','b','em','i','table','thead','tbody','tr','th','td','caption','dl','dt','dd','pre','code','a'],allowedAttributes:{},nonTextTags:['style','script','textarea','option','template','noscript','head','svg','iframe']});
   const browser=await puppeteer.launch({args:puppeteer.defaultArgs({args:chromium.args,headless:'shell'}),executablePath:await chromium.executablePath(),headless:'shell',timeout:10000,defaultViewport:{width:1280,height:860}});
   try {
@@ -50,7 +50,7 @@ async function crosscheck(sha256,sourceUrl){
   } catch { return {status:'unavailable',link:verifier.href}; }
 }
 
-module.exports=async (req,res)=>{
+export default async (req,res)=>{
   res.setHeader('Cache-Control','no-store');
   if(req.method!=='GET') return res.status(405).json({error:'Método no permitido.'});
   let url;
@@ -77,7 +77,7 @@ module.exports=async (req,res)=>{
     const capturedAt=new Date().toISOString(),sha256=digest(bytes);
     const headers=metadata(response.headers),cookies=cookieMetadata(response.headers);
     const [visual,intautor]=await Promise.all([
-      visualCapture(bytes.toString('utf8')).catch(error=>{console.warn('visual-capture-failed',error.name,error.code||'runtime');return null;}),crosscheck(sha256,url.href)
+      visualCapture(bytes.toString('utf8')).catch(error=>{console.warn('visual-capture-failed',error.name,error.code||'runtime',String(error.message).split('\n')[0].slice(0,180));return null;}),crosscheck(sha256,url.href)
     ]);
     const manifest={schema:2,url:url.href,capturedAt,httpStatus:response.status,type,size,sha256,headers,cookies,visualSha256:visual?.sha256??null,intautor};
     return res.status(200).json({...manifest,manifestSha256:digest(JSON.stringify(manifest)),encoding:'base64',html:bytes.toString('base64'),visual});

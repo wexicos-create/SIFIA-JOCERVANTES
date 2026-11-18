@@ -643,7 +643,42 @@ function evidenceCard(snapshot) {
     const {id,...evidence}=snapshot;
     download('evidencia-'+snapshot.sha256.slice(0,12)+'.json',JSON.stringify(evidence,null,2),'application/json');
   });
-  item.append(title,sourceLink,visual,facts,backup,exportButton);
+  const attach=node('label','Adjuntar captura original de pantalla');
+  const input=node('input');
+  input.type='file'; input.accept='image/png,image/jpeg';
+  const attachmentStatus=node('p','','hint');
+  attachmentStatus.setAttribute('role','status');
+  attach.append(input);
+  input.addEventListener('change',async()=>{
+    const file=input.files[0];
+    if(!file) return;
+    input.disabled=true;
+    try{
+      if(!['image/png','image/jpeg'].includes(file.type)||file.size>2_000_000) throw Error('Usa PNG o JPEG de hasta 2 MB.');
+      const image=await createImageBitmap(file);
+      const width=image.width,height=image.height;
+      image.close();
+      const bytes=await file.arrayBuffer();
+      const hash=await crypto.subtle.digest('SHA-256',bytes);
+      const sha256=Array.from(new Uint8Array(hash),part=>part.toString(16).padStart(2,'0')).join('');
+      const encoded=await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(String(reader.result).split(',')[1]);
+        reader.onerror=()=>reject(Error('No se pudo leer la imagen.'));
+        reader.readAsDataURL(file);
+      });
+      await archiveAction('readwrite',store=>store.put({...snapshot,attachment:{type:file.type,data:encoded,width,height,sha256,attachedAt:new Date().toISOString()}}));
+      await showArchive();
+    }catch(error){attachmentStatus.textContent=error.message;}
+    finally{input.disabled=false;}
+  });
+  if(snapshot.attachment&&['image/png','image/jpeg'].includes(snapshot.attachment.type)&&/^[A-Za-z0-9+/=]+$/.test(snapshot.attachment.data)){
+    const view=node('figure','','evidence-visual'), image=node('img');
+    image.src='data:'+snapshot.attachment.type+';base64,'+snapshot.attachment.data;
+    image.alt='Captura de pantalla aportada manualmente';image.loading='lazy';
+    view.append(image,node('figcaption','Captura aportada manualmente · '+snapshot.attachment.attachedAt+' · SHA-256 '+snapshot.attachment.sha256));
+    item.append(title,sourceLink,visual,view,facts,backup,attach,attachmentStatus,exportButton);
+  } else item.append(title,sourceLink,visual,facts,backup,attach,attachmentStatus,exportButton);
   return item;
 }
 async function showArchive(){

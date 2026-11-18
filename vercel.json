@@ -1,1 +1,1 @@
-{"functions":{"api/archivo.js":{"maxDuration":45,"includeFiles":"node_modules/@sparticuz/chromium/bin/**"}}}
+{"functions":{"api/archivo.mjs":{"maxDuration":45,"includeFiles":"node_modules/@sparticuz/chromium/bin/**"}}}
